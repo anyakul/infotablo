@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>videojs-playlist Demo</title>
+  <link rel="stylesheet" href="css/style.min.css" type="text/css">
+</head>
+
+<body class="container">
+  <div id="player">
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <video id="homevideo" autoplay src="img/video-1.mp4" muted poster=""></video>
+        </div>
+      </div>
+    </div>
+    <!--<video id="homevideo" autoplay src="" muted poster=""></video>-->
+    <div class="info" id="info">
+      <div class="info-column">
+        <p class="info-item">Компания АДОР основана в 2002 году</p>
+      </div>
+      <div class="info-column">
+        <p class="info-item" id="weekday">Среда</p>
+        <p class="info-item" id="current_date">14 мая 2025</p>
+        <p class="info-item" id="time">15.30</p>
+      </div>
+    </div>
+  </div>
+  <button id="player-fullscreen" type="button">На весь экран</button>
+  <h2 class="player-header">Видео сегодня:</h2>
+  <div class="player-block">
+    <p class="player-text" data-from="0" data-to="0">Весь день:</p>
+    <ul class="player-list">
+      <li class="player-item" data-type="video">
+        <span class="player-item-image">
+          <video src="" width="200" height="200" poster="/img/blog.jpg"></video>
+        </span>
+        <span class="player-file-name">video-1.mp4</span>
+      </li>
+      <li class="player-item" data-type="video">
+        <span class="player-item-image">
+          <video src="" width="200" height="200" poster="/img/blog.jpg"></video>
+        </span>
+        <span class="player-file-name">video-1.mp4</span>
+      </li>
+    </ul>
+  </div>
+  <div class="player-block">
+    <p class="player-text" data-from="15" data-to="17">C 14:00 до 16:00</p>
+    <ul class="player-list">
+      <li class="player-item" data-type="image">
+        <span class="player-item-image">
+          <video poster="/img/blog.jpg" width="200" height="200"></video>
+        </span>
+        <span class="player-file-name">blog.jpg</span>
+      </li>
+    </ul>
+  </div>
+  <!--<div class="video-no-item">
+    <h2>На сегодня нет видео</h2>
+  </div>
+  <button class="green-button" data-open-modal="edit-list">Добавить видео</button>-->
+  <script src="js/flatpicr.js"></script>
+  <script src="js/main.min.js"></script>
+</body>
+
+</html>

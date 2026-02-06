@@ -1,0 +1,54 @@
+.info
+  position: absolute
+  bottom: 0
+  left: 0
+  display: flex
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  height: 47px
+  background-color: $white
+  font-family: 'Arial'
+
+.info-item
+  display: flex
+  align-items: center
+  gap: 10px
+  font-size: 16px
+  white-space: nowrap
+
+.info-column
+  display: flex
+  align-items: center
+  gap: 20px
+
+  &:last-child
+    margin-left: auto
+
+.fullscreen-mode
+  .info
+    height: 47px
+    padding: 0 30px
+
+  .info-item
+    font-size: 26px
+    gap: 30px
+
+  .info-column
+    gap: 40px
+
+  img
+    width: 50px
+    height: 50px
+
+  .info-column
+    gap: 70px
+
+  #player
+    video,
+    img
+      width: 100vw
+      height: calc(100vh - 47px)
+      min-width: 100vw
+      min-height: calc(100vh - 47px)
+      object-fit: contain

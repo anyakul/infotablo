@@ -1,0 +1,32 @@
+.form
+  margin-bottom: 50px
+
+  input[type="file"]
+    border-width: 0
+    padding: 0
+
+  label
+    display: flex
+    flex-direction: column
+    width: fit-content
+    font-size: 16px
+    line-height: 20px
+    color: $header-black
+
+  .input-file
+    height: 45px
+
+.input-file.visually-hidden
+  display: none
+
+select
+  width: 100%
+  height: 40px
+
+form .has-error,
+form .has-error ~ span
+  border: 1px solid #F26464
+
+.calendars
+  display: flex
+  gap: 30px

@@ -1,0 +1,160 @@
+.calendar
+  width: 307px
+  margin-bottom: 20px
+
+  #gotoToday
+    display: flex
+    width: fit-content
+    margin-left: auto
+    margin-top: 10px
+    font-size: 12px
+
+.admin-table
+  width: 100%
+  border: 1px solid #36281d
+  border-collapse: collapse
+
+  input[type="checkbox"]
+    position: absolute
+    opacity: 0
+    pointer-events: none
+
+  thead
+    background-color: #36281d
+    border-collapse: collapse
+    color: $white
+
+  th,
+  td
+    padding: 5px
+    vertical-align: top
+    border: 1px solid #36281d
+    border-collapse: collapse
+
+    label
+      display: inline-block
+      min-height: 36px
+
+  .admin-delete-file + label
+    font-size: 14px
+
+  .admin-delete-file + label::after
+    content: "Удалить файл"
+    display: block
+    width: 100%
+    font-size: 10px
+
+  .admin-delete-file:checked + label
+    text-decoration: line-through
+
+  .admin-delete-time + label
+    display: flex
+    width: fit-content
+    font-size: 14px
+    line-height: 18px
+
+  .admin-delete-time + label::after
+    content: "Удалить время"
+
+  .admin-delete-time:checked + label::after
+    content: "Восстановить время"
+
+.admin-time
+  width: 115px
+  min-width: 115px
+
+.admin-new-files
+  width: 200px
+  min-width: 200px
+
+.admin-file-btn
+  font-size: 16px
+
+.admin-old-files-list,
+.admin-new-files-list
+  display: flex
+  flex-wrap: wrap
+  gap: 10px
+
+  li
+    width: 100px
+    min-width: 100px
+    
+    .admin-item-image
+      position: relative
+      left: 0
+      top: 0
+      display: block
+      width: 100px
+      height: 100px
+
+      video
+        width: 100%
+        height: 100%
+        min-height: 100%
+        object-fit: cover
+
+.admin-action
+  width: 140px
+
+.input-file
+  position: relative
+  display: inline-block
+
+.input-file-btn
+  position: relative
+  text-decoration: none
+  text-align: center
+  line-height: 22px
+  height: 40px
+  padding: 10px 20px
+  box-sizing: border-box
+  border: none
+  margin: 0
+  transition: background-color 0.2s
+  border: 1px solid $light-grey
+
+.input-file input[type=file]
+  position: absolute
+  z-index: -1
+  opacity: 0
+  display: block
+  width: 0
+  height: 0
+ 
+/* Focus */
+.input-file input[type=file]:focus + .input-file-btn
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25)
+ 
+/* Hover/active */
+.input-file:hover .input-file-btn
+  background-color: $light-grey
+
+.input-file:active .input-file-btn 
+  background-color: #2E703A
+ 
+/* Disabled */
+.input-file input[type=file]:disabled + .input-file-btn
+  background-color: #eee
+
+.admin-submit-button
+  display: flex
+  justify-content: center
+  align-items: center
+  width: fit-content
+  height: 46px
+  margin-left: auto
+  margin-top: 20px
+  padding: 0 40px
+  font-size: 14px
+  line-height: 20px
+  border-radius: $all-border-radius
+  background-color: #36281d
+  white-space: nowrap
+  color: $white
+
+  @media (hover: hover), screen and (min-width: 0\0)
+    &:hover,
+    &:active,
+    &:focus
+      opacity: 0.8

@@ -1,0 +1,99 @@
+.wp-block-group.is-layout-constrained
+  margin: 0 !important
+
+.wp-block-group.alignfull
+  padding: 0 !important
+
+.wp-block-spacer
+  height: 0 !important
+
+.has-text-align-center.wp-block-post-title
+  margin-block-start: 0
+
+.file-dropzone
+  border: 2px dashed #ccc
+  padding: 20px
+  text-align: center
+  cursor: pointer
+  overflow: hidden
+  position: relative
+
+.file-dropzone input
+  position: absolute
+  width: 100%
+  left: 0
+  top: 0
+  height: 100%
+  opacity: 0
+
+.file-dropzone span
+  cursor: pointer
+
+.preview-container
+  margin-top: 20px
+  display: flex
+  flex-wrap: wrap
+  gap: 10px
+
+.preview-image
+  width: 100px
+  border-radius: var(--radius1)
+  height: 100px
+  overflow: hidden
+  position: relative
+  background: #f6f6f6
+  display: flex
+  align-items: center
+  transition: var(--animation1)
+	
+  img
+    display: block
+    width: 100%
+    height: 100%
+
+  button
+    content: "X"
+    width: 15px
+    height: 15px
+    background: rgba(255, 255, 255, 0.4)
+    color: #FFFFFF
+    border-radius: 100%
+    position: absolute
+    top: 10px
+    right: 10px
+    z-index: 20
+    display: flex
+    font-size: 30px
+    justify-content: center
+    align-items: center
+    transition: var(--animation1)
+    cursor: pointer
+
+    &:after
+      content: "X"
+      width: 15px
+      height: 15px
+      color: #FFFFFF
+      border-radius: 100%
+      position: absolute
+      top: 0
+      right: 0
+      left: 0
+      bottom: 0
+      margin: auto
+      z-index: 20
+      display: flex
+      justify-content: center
+      align-items: center
+      transition: var(--animation1)
+      cursor: pointer
+
+.preview-image img
+  object-fit: cover
+  object-position: center
+
+.preview-image:after:hover
+  background: rgba(255, 255, 255, 0.8)
+
+.preview-container
+  position: relative

@@ -1,0 +1,166 @@
+*
+  margin: 0
+  padding: 0
+
+*,
+*::before,
+*::after
+  box-sizing: border-box
+
+html
+  font-style: normal
+  font-weight: 400
+  font-size: 20px
+  line-height: 24px
+  font-family: $main-font
+  color: $black
+  text-align: left
+  -webkit-font-smoothing: antialiased
+  text-rendering: optimizeLegibility
+  overflow-x: hidden
+
+h1,
+h2
+  font-weight: 400
+  margin: 0
+  font-size: 24px
+  line-height: 28px
+  margin-bottom: 10px
+
+body
+  width: 100%
+  height: 100%
+  overflow-x: hidden
+
+input
+  border-radius: 0
+
+  &::placeholder
+    opacity: 1
+
+  &:invalid
+    box-shadow: none
+
+select
+  border-radius: 0
+
+//ie11 X removal
+input
+   &::-ms-clear,
+   &::-ms-reveal
+      display: none
+
+// chrome search X removal
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration
+  appearance: none
+
+// input[number] arrows removal
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  margin: 0
+  appearance: none
+
+// ios button \ inputs reset
+select,
+textarea,
+input:matches([type="email"], [type="number"], [type="password"], [type="search"], [type="tel"], [type="text"], [type="url"])
+  appearance: none
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"]
+  appearance: none
+
+.wrapper
+  position: relative
+  display: flex
+  flex-direction: column
+  min-height: 100vh
+  overflow: hidden
+
+  header,
+  footer
+    flex-shrink: 0
+
+  main
+    flex-grow: 1
+
+.visually-hidden
+  position: absolute
+  width: 1px
+  height: 1px
+  margin: -1px
+  padding: 0
+  overflow: hidden
+  white-space: nowrap
+  border: 0
+  clip: rect(0 0 0 0)
+  clip-path: inset(100%)
+
+.no-scrollbar
+  -ms-overflow-style: none
+  scrollbar-width: none
+
+  &::-webkit-scrollbar
+    display: none
+
+.scroll-lock-ios
+  position: fixed
+  overflow: hidden
+
+a
+  text-decoration: none
+  color: $black
+  cursor: pointer
+
+label
+  cursor: pointer
+
+ul
+  list-style: none
+  margin: 0
+
+p
+  font-size: 14px
+  line-height: 20.8px
+
+  @media(max-width: $max-mobile)
+    font-size: 12px
+    line-height: 16.8px
+
+button
+  background-color: transparent
+  border-width: 0
+  cursor: pointer
+  font-size: 16px
+  line-height: 150%
+
+  @media(max-width: $max-mobile)
+    font-size: 12px
+    line-height: 150%
+
+fieldset
+  border-width: 0
+  padding: 0
+
+input
+  outline: none
+
+.scroll-lock
+  //position: fixed
+  overflow: hidden
+
+address
+  font-style: normal
+.wp-block-group.is-layout-constrained
+  margin: 0 !important
+
+.wp-block-group.alignfull
+  padding: 0 !important
+
+.wp-block-spacer
+  height: 0 !important

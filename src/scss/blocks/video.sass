@@ -1,0 +1,101 @@
+.video-wrapper
+  position: relative
+  width: 100%
+  height: 700px
+
+  video,
+  iframe
+    position: absolute
+    top: 0
+    left: 0
+    z-index: 4
+    display: block
+    width: 100%
+    height: 100%
+    object-fit: cover
+
+  .video-poster
+    width: 100%
+    height: 100%
+
+  img
+    display: block
+    width: 100%
+    height: 100%
+    object-fit: cover
+
+.video-block
+  position: relative
+  width: 100vw
+  height: 100vh
+
+.video-block.is-play
+  .video-button
+    opacity: 0
+
+    &:hover,
+    &:active
+      opacity: 0.5
+
+.video-button
+  position: absolute
+  top: 0
+  right: 0
+  left: 0
+  bottom: 0
+  z-index: 1000
+  width: 100px
+  height: 100px
+  margin: auto
+  background-image: url(../img/video-button.svg)
+  background-size: cover
+  background-color: transparent
+  border-width: 0
+  cursor: pointer
+
+  &:hover,
+  &:active
+    opacity: 0.8
+
+  &:disabled
+    opacity: 0.5
+    pointer-events: none
+
+.is-play
+  [data-video="button"]
+    opacity: 0
+
+    &:hover,
+    &:active
+      opacity: 0.5
+
+  .video-button-pause
+    width: 18px
+    height: 24px
+    margin-right: 20px
+
+    .video-button-pause-svg
+      display: block
+
+    .video-button-play-svg
+      display: none
+
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-volume-slider-container,
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-full-page-media::-webkit-media-controls-panel,
+video::-webkit-media-controls-timeline-container,
+video::-webkit-media-controls-time-remaining-display,
+video::-webkit-media-controls-seek-back-button,
+video::-webkit-media-controls-seek-forward-button,
+video::-webkit-media-controls-fullscreen-button,
+video::-webkit-media-controls-rewind-button,
+video::-webkit-media-controls-return-to-realtime-button,
+video::-webkit-media-controls-toggle-closed-captions-button,
+video::-webkit-tap-highlight-color
+  background-color: transparent !important
+  background: none !important
