@@ -202,12 +202,15 @@ export const player = () => {
       }
 
       else if (filesNow.length == 0) {
+        let output = '';
         output += `
           <div class="swiper-slide">
             <video class="homevideo" autoplay src="" muted poster="">
           </div>
         `;
         document.querySelector('.swiper-wrapper').innerHTML = output;
+        const videoPlayer = document.querySelector('.homevideo');
+        console.log(document.querySelector('.homevideo'));
         videoPlayer.poster = '';
         videoPlayer.src = '';
         info.setAttribute('style', 'display: none');

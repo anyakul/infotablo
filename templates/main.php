@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>videojs-playlist Demo</title>
+  <title>Главная</title>
   <link rel="stylesheet" href="/deploy/css/style.min.css">
 </head>
 
