@@ -23,13 +23,11 @@
             <th>Время до:</th>
             <th>Старые файлы</th>
             <th>Новые файлы</th>
-            <th>Действие</th>
           </tr>
         </thead>
         <tbody>
         </tbody>
       </table>
-      <button class="admin-time-button" type="button">Добавить новое время</button>
       <button class="admin-submit-button" type="submit">Сохранить</button>
     </form>
   </div>
