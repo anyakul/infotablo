@@ -85,11 +85,8 @@ export const info = () => {
     const msUntilMinute = calculateTimeUntilMinute();
     const msUntilHour = calculateTimeUntilHour();
     const msUntilMidnight = calculateTimeUntilMidnight();
-    setTimeout(updateClock, msUntilMinute);
-    setInterval(updateClock, 60000);
-    setTimeout(updateWeather, msUntilHour);
-    setInterval(updateWeather, 60 * 60 * 1000);
-    setTimeout(updatedate, msUntilMidnight);
-    setInterval(updatedate, 24 * 60 * 60 * 1000);
+    setTimeout(setInterval(updateClock, 60000), msUntilMinute);
+    setTimeout(setInterval(updateWeather, 60 * 60 * 1000), msUntilHour);
+    setTimeout(setInterval(updatedate, 24 * 60 * 60 * 1000), msUntilMidnight);
   }
 }

@@ -11,7 +11,7 @@
 
 .admin-table
   width: 100%
-  border: 1px solid #36281d
+  border: 1px solid $brown
   border-collapse: collapse
 
   input[type="checkbox"]
@@ -20,7 +20,7 @@
     pointer-events: none
 
   thead
-    background-color: #36281d
+    background-color: $brown
     border-collapse: collapse
     color: $white
 
@@ -28,7 +28,7 @@
   td
     padding: 5px
     vertical-align: top
-    border: 1px solid #36281d
+    border: 1px solid $brown
     border-collapse: collapse
 
     label
@@ -112,7 +112,7 @@
   border: none
   margin: 0
   transition: background-color 0.2s
-  border: 1px solid $light-grey
+  border: 1px solid $brown
 
 .input-file input[type=file]
   position: absolute
@@ -128,10 +128,10 @@
  
 /* Hover/active */
 .input-file:hover .input-file-btn
-  background-color: $light-grey
+  background-color: $brown
 
 .input-file:active .input-file-btn 
-  background-color: #2E703A
+  background-color: $brown
  
 /* Disabled */
 .input-file input[type=file]:disabled + .input-file-btn
@@ -148,8 +148,8 @@
   padding: 0 40px
   font-size: 14px
   line-height: 20px
-  border-radius: $all-border-radius
-  background-color: #36281d
+  border-radius: 4px
+  background-color: $brown
   white-space: nowrap
   color: $white
 
