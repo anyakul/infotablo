@@ -28,12 +28,46 @@ export const info = () => {
     info.querySelector('#weekday').textContent = formatWeekday(currentDate);
   }
 
-  // Показываем текущее время при загрузке страницы
+  /*function updateWeather() {
+    const currentDate = new Date();
+    const lat = 55.75; // Координаты Москвы
+    const lon = 37.62;
+    const token = 'YOUR_TOKEN_HERE';
+
+    fetch(`https://api.gismeteo.ru/v2/current/?lat=${lat}&lon=${lon}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Обрабатываем ответ
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+      });
+    info.querySelector('#temp').textContent = formatDate(currentDate);
+    info.querySelector('#pressure').textContent = formatWeekday(currentDate);
+    info.querySelector('#humid').textContent = formatWeekday(currentDate);
+    info.querySelector('#pressure').textContent = formatWeekday(currentDate);
+  }*/
 
   if (info) {
     updateClock();
     updatedate();
+
+    function calculateTimeUntilMinute() {
+      const now = new Date();
+      const secondsRemaining = 60 - now.getSeconds();
+      const millisecondsRemaining = secondsRemaining * 1000;
+      return millisecondsRemaining;
+    }
+
+    const msUntilMinute = calculateTimeUntilMinute();
+    setTimeout(updatedate, msUntilMinute);
     setInterval(updateClock, 60000); // 60000 мс = 1 минута
+    //setTimeout(updateWeather, msUntilMinute);
+    //setInterval(updateWeather, 60 * 60 * 1000); // 60000 мс = 1 минута
 
     function calculateTimeUntilMidnight() {
       const now = new Date();

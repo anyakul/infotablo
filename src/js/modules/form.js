@@ -4,7 +4,7 @@ export const form = () => {
 
   if (forms) {
     const date = new Date();
-    const day = (date.getDate() < 10) ? ('0' + (date.getDate())) : (getDate());
+    const day = (date.getDate() < 10) ? ('0' + (date.getDate())) : (date.getDate());
     const month = (date.getMonth() < 10) ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
     const year = date.getFullYear();
     const formattedDate = `${year}-${month}-${day}`;
@@ -17,9 +17,10 @@ export const form = () => {
       disableMobile: true,
       minDate: new Date(),
       defaultDate: new Date(),
-      locale: {
-        firstDayOfWeek: 1, // Понедельник — первый день недели
-      },
+      /*locale: {
+        firstDayOfWeek: 1,
+      },*/
+      locale: 'ru',
     });
 
     calendar.config.onChange.push(function(selectedDates, dateStr, instance) {

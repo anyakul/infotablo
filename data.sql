@@ -10,7 +10,7 @@ SET @data_ot := '';
 SET @data_do := '';
 
 INSERT INTO dates (dates)
-SELECT DATE_ADD('2026-02-07', INTERVAL n DAY) AS dt
+SELECT DATE_ADD(@data_ot, INTERVAL n DAY) AS dt
 FROM (
   SELECT a.n + b.n*10 + c.n*100 AS n
   FROM (
@@ -23,7 +23,9 @@ FROM (
     SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9
   ) AS c
 ) AS numbers
-WHERE DATE_ADD(@data_ot, INTERVAL n DAY) <= @data_do;
+WHERE
+  DATE_ADD(@data_ot, INTERVAL n DAY) <= @data_do
+  AND DAYOFWEEK(DATE_ADD(@data_ot, INTERVAL n DAY)) NOT IN (1, 7);
 
 
 INSERT INTO times (date_id, time_from, time_to)

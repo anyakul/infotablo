@@ -14,7 +14,8 @@ export const path = {
     fonts: `${buildFolder}/fonts/`,
   },
   src: {
-    jsFlatpicr: `${srcFolder}/js/flatpicr.js`,
+    jsFlatpickr: `${srcFolder}/js/flatpickr.js`,
+    jsFlatpickru: `${srcFolder}/js/flatpickru.js`,
     jsSwiper: `${srcFolder}/js/swiper.bundle.js`,
     js: `${srcFolder}/js/main.js`,
     images: `${srcFolder}/img/*.{jpeg,jpg,png,svg,webp,mp4}`,
