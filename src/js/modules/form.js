@@ -17,9 +17,6 @@ export const form = () => {
       disableMobile: true,
       minDate: new Date(),
       defaultDate: new Date(),
-      /*locale: {
-        firstDayOfWeek: 1,
-      },*/
       locale: 'ru',
     });
 

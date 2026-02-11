@@ -6,6 +6,13 @@ export const info = () => {
     return date.toLocaleDateString('ru-RU', options);
   }
 
+  function formatDateNums(date) {
+    const day = (date.getDate() < 10) ? ('0' + (date.getDate())) : (date.getDate());
+    const month = (date.getMonth() < 10) ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
+
   function formatWeekday(date) {
     const options = { weekday: 'long'};
     return date.toLocaleDateString('ru-RU', options);
@@ -28,54 +35,60 @@ export const info = () => {
     info.querySelector('#weekday').textContent = formatWeekday(currentDate);
   }
 
-  /*function updateWeather() {
-    const currentDate = new Date();
-    const lat = 55.75; // Координаты Москвы
-    const lon = 37.62;
-    const token = 'YOUR_TOKEN_HERE';
+  function updateWeather() {
+    const lat = 53.507852;
+    const lon = 49.420411;
+    const date = new Date();
+    const currentDate = formatDateNums(date);
+    const time = date.getHours() + ':00';
+    console.log(currentDate);
+    console.log(time);
 
-    fetch(`https://api.gismeteo.ru/v2/current/?lat=${lat}&lon=${lon}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(`/weather.php?lat=${lat}&lon=${lon}&date=${currentDate}&time=${time}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data); // Обрабатываем ответ
+        info.querySelector('#temp').textContent = 't ' + Math.round(data[0].temp_100_cel) + '°C';
+        info.querySelector('#pressure').textContent = Math.round(data[0].pres_surf / 133.322) + ' мм';
+        info.querySelector('#humid').textContent = Math.round(data[0].vlaga_2) + '%';
+        info.querySelector('#wind').textContent = Math.round(data[0].wind_speed_10) + ' м/c';
       })
       .catch(error => {
         console.error('Ошибка:', error);
       });
-    info.querySelector('#temp').textContent = formatDate(currentDate);
-    info.querySelector('#pressure').textContent = formatWeekday(currentDate);
-    info.querySelector('#humid').textContent = formatWeekday(currentDate);
-    info.querySelector('#pressure').textContent = formatWeekday(currentDate);
-  }*/
+  }
+
+  function calculateTimeUntilMinute() {
+    const now = new Date();
+    const secondsRemaining = 60 - now.getSeconds();
+    const millisecondsRemaining = secondsRemaining * 1000;
+    return millisecondsRemaining;
+  }
+
+  function calculateTimeUntilHour() {
+    const now = new Date();
+    const nextHour = new Date(now.getTime() + (60 - now.getMinutes()) * 60 * 1000);
+    nextHour.setSeconds(0, 0);
+    return nextHour.getTime() - now.getTime();
+  }
+
+  function calculateTimeUntilMidnight() {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    return tomorrow.getTime() - now.getTime();
+  }
 
   if (info) {
     updateClock();
     updatedate();
-
-    function calculateTimeUntilMinute() {
-      const now = new Date();
-      const secondsRemaining = 60 - now.getSeconds();
-      const millisecondsRemaining = secondsRemaining * 1000;
-      return millisecondsRemaining;
-    }
+    updateWeather();
 
     const msUntilMinute = calculateTimeUntilMinute();
-    setTimeout(updatedate, msUntilMinute);
-    setInterval(updateClock, 60000); // 60000 мс = 1 минута
-    //setTimeout(updateWeather, msUntilMinute);
-    //setInterval(updateWeather, 60 * 60 * 1000); // 60000 мс = 1 минута
-
-    function calculateTimeUntilMidnight() {
-      const now = new Date();
-      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
-      return tomorrow.getTime() - now.getTime();
-    }
-
+    const msUntilHour = calculateTimeUntilHour();
     const msUntilMidnight = calculateTimeUntilMidnight();
+    setTimeout(updateClock, msUntilMinute);
+    setInterval(updateClock, 60000);
+    setTimeout(updateWeather, msUntilHour);
+    setInterval(updateWeather, 60 * 60 * 1000);
     setTimeout(updatedate, msUntilMidnight);
     setInterval(updatedate, 24 * 60 * 60 * 1000);
   }

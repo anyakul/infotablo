@@ -17,19 +17,19 @@
         <div class="info-column">
           <p class="info-item">
             <img src="/deploy/img/погода.svg" width="20" height="20" alt="погода">
-            <span class="info-item-span" id="temp">t +23°C</span>
+            <span class="info-item-span" id="temp"></span>
           </p>
           <p class="info-item">
             <img src="/deploy/img/давление.svg" width="20" height="20" alt="давление">
-            <span class="info-item-span" id="pressure">730 мм</span>
+            <span class="info-item-span" id="pressure"></span>
           </p>
           <p class="info-item">
             <img src="/deploy/img/влага.svg" width="20" height="20" alt="Влага">
-            <span class="info-item-span" id="humid">38%</span>
+            <span class="info-item-span" id="humid"></span>
           </p>
           <p class="info-item">
             <img src="/deploy/img/ветер.svg" width="20" height="20" alt="Ветер">
-            <span class="info-item-span" id="wind">2 м/c</span>
+            <span class="info-item-span" id="wind"></span>
           </p>
         </div>
         <!--<p class="info-item">Компания АДОР основана в 2002 году</p>-->

@@ -44,6 +44,7 @@
     "@daypilot/daypilot-lite-javascript": "^4.6.1",
     "browsersync-ssi": "^0.2.4",
     "circletype": "^2.3.0",
+    "cors-anywhere": "^0.4.4",
     "dotenv": "^17.2.3",
     "editorconfig-cli": "^0.3.0",
     "ejs": "^3.1.10",

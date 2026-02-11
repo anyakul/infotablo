@@ -1,7 +1,19 @@
 export const player = () => {
   const player = document.querySelector('.player-blocks');
   const playerWrapper = document.querySelector('#player');
-  const videoPlayer = document.getElementById('homevideo');
+
+  function calculateTimeUntilHour() {
+    const now = new Date();
+    const nextHour = new Date(now.getTime() + (60 - now.getMinutes()) * 60 * 1000);
+    nextHour.setSeconds(0, 0);
+    return nextHour.getTime() - now.getTime();
+  }
+
+  function calculateTimeUntilMidnight() {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    return tomorrow.getTime() - now.getTime();
+  }
 
   if (player) {
     const info = playerWrapper.querySelector('#info');
@@ -24,19 +36,14 @@ export const player = () => {
           processResponse(data);
     
           playerFunc();
-          const now = new Date();
-          const nextHour = new Date(now.getTime() + (60 - now.getMinutes()) * 60 * 1000);
-          nextHour.setSeconds(0, 0);
-          const waitUntilNextHour = nextHour.getTime() - now.getTime();
           const msUntilMidnight = calculateTimeUntilMidnight();
+          const msUntilHour = calculateTimeUntilHour();
           setTimeout(getdata, msUntilMidnight);
           setInterval(getdata, 24 * 60 * 60 * 1000);
           setTimeout(fetchDeleteFunc, msUntilMidnight);
           setInterval(fetchDeleteFunc, 24 * 60 * 60 * 1000);
-          setTimeout(playerFunc, waitUntilNextHour);
+          setTimeout(playerFunc, msUntilHour);
           setInterval(playerFunc, 60 * 60 * 1000);
-          setTimeout(updateClock, waitUntilNextHour);
-          setInterval(updateClock, 60 * 60 * 1000);
         } else {
           console.error('Ошибка:', data.message);
         }
@@ -52,23 +59,6 @@ export const player = () => {
       const response = fetch('deleteRecords.php', {
         method: 'POST',
       });
-    }
-
-  function updateClock() {
-    const clockElement = info.querySelector('#time');
-    const currentTime = new Date();
-
-    // Форматируем время в виде чч:мм
-    const hours = String(currentTime.getHours()).padStart(2, '0');
-    const minutes = String(currentTime.getMinutes()).padStart(2, '0');
-
-    clockElement.textContent = `${hours}:${minutes}`;
-  }
-
-    function calculateTimeUntilMidnight() {
-      const now = new Date();
-      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
-      return tomorrow.getTime() - now.getTime();
     }
 
     function processResponse(response) {
@@ -162,10 +152,10 @@ export const player = () => {
           const videoPlayer = document.querySelector('.homevideo');
           videoPlayer.poster = '';
           videoPlayer.src = '';
-          info.setAttribute('style', 'display: none');
+          //info.setAttribute('style', 'display: none');
         }
       } else {
-        info.setAttribute('style', 'display: none');
+        //info.setAttribute('style', 'display: none');
       }
     }
   
