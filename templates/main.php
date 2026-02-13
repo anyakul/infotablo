@@ -12,26 +12,27 @@
     <div class="swiper">
       <div class="swiper-wrapper"></div>
     </div>
-    <div class="info" id="info">
+    <div class="info" id="info" style="display: flex">
       <div class="info-column">
-        <div class="info-column">
-          <p class="info-item">
-            <img src="/deploy/img/погода.svg" width="20" height="20" alt="погода">
-            <span class="info-item-span" id="temp"></span>
-          </p>
-          <p class="info-item">
-            <img src="/deploy/img/давление.svg" width="20" height="20" alt="давление">
-            <span class="info-item-span" id="pressure"></span>
-          </p>
-          <p class="info-item">
-            <img src="/deploy/img/влага.svg" width="20" height="20" alt="Влага">
-            <span class="info-item-span" id="humid"></span>
-          </p>
-          <p class="info-item">
-            <img src="/deploy/img/ветер.svg" width="20" height="20" alt="Ветер">
-            <span class="info-item-span" id="wind"></span>
-          </p>
-        </div>
+        <p class="info-item">
+          Погода Тольятти
+        </p>
+        <p class="info-item">
+          <img src="/deploy/img/погода.svg" width="20" height="20" alt="погода">
+          <span class="info-item-span" id="temp"></span>
+        </p>
+        <p class="info-item">
+          <img src="/deploy/img/давление.svg" width="20" height="20" alt="давление">
+          <span class="info-item-span" id="pressure"></span>
+        </p>
+        <p class="info-item">
+          <img src="/deploy/img/влага.svg" width="20" height="20" alt="Влага">
+          <span class="info-item-span" id="humid"></span>
+        </p>
+        <p class="info-item">
+          <img src="/deploy/img/ветер.svg" width="20" height="20" alt="Ветер">
+          <span class="info-item-span" id="wind"></span>
+        </p>
         <!--<p class="info-item">Компания АДОР основана в 2002 году</p>-->
       </div>
       <div class="info-column">

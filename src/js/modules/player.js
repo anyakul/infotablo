@@ -34,13 +34,16 @@ export const player = () => {
       .then(data => {
         if (data.success) {
           processResponse(data);
-
+    
           playerFunc();
           const msUntilMidnight = calculateTimeUntilMidnight();
           const msUntilHour = calculateTimeUntilHour();
-          setTimeout(setInterval(getdata, 24 * 60 * 60 * 1000), msUntilMidnight);
-          setTimeout(setInterval(fetchDeleteFunc, 24 * 60 * 60 * 1000), msUntilMidnight);
-          setTimeout(setInterval(playerFunc, 60 * 60 * 1000), msUntilHour);
+          setTimeout(getdata, msUntilMidnight);
+          setInterval(getdata, 24 * 60 * 60 * 1000);
+          setTimeout(fetchDeleteFunc, msUntilMidnight);
+          setInterval(fetchDeleteFunc, 24 * 60 * 60 * 1000);
+          setTimeout(playerFunc, msUntilHour);
+          setInterval(playerFunc, 60 * 60 * 1000);
         } else {
           console.error('Ошибка:', data.message);
         }
@@ -72,22 +75,22 @@ export const player = () => {
         const relatedVideos = files.filter(item => item.time_id === time.id);
 
         output += `
-          <div class="player-block">
-            <p class="player-text" data-from="${time.time_from}" data-to="${time.time_to}">${fromText}</p>
-            <ul class="player-list">
-              ${relatedVideos.map(videoItem => `
-                <li class="player-item" data-type="${videoItem.types}">
-                  <span class="player-item-image">
-                    ${videoItem.types === 'image' ? 
-                      `<video poster="/uploads/${videoItem.files}" width="100" height="100"></video>` :
-                      `<video src="/uploads/${videoItem.files}" width="100" height="100"></video>`
-                    }
-                  </span>
-                  <span class="player-file-name">${videoItem.files}</span>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
+            <div class="player-block">
+                <p class="player-text" data-from="${time.time_from}" data-to="${time.time_to}">${fromText}</p>
+                <ul class="player-list">
+                    ${relatedVideos.map(videoItem => `
+                        <li class="player-item" data-type="${videoItem.types}">
+                            <span class="player-item-image">
+                                ${videoItem.types === 'image' ? 
+                                    `<video poster="/uploads/${videoItem.files}" width="100" height="100"></video>` :
+                                    `<video src="/uploads/${videoItem.files}" width="100" height="100"></video>`
+                                }
+                            </span>
+                            <span class="player-file-name">${videoItem.files}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
         `;
       });
 
@@ -149,10 +152,10 @@ export const player = () => {
           const videoPlayer = document.querySelector('.homevideo');
           videoPlayer.poster = '';
           videoPlayer.src = '';
-          info.setAttribute('style', 'display: none');
+          //info.setAttribute('style', 'display: none');
         }
       } else {
-        info.setAttribute('style', 'display: none');
+        //info.setAttribute('style', 'display: none');
       }
     }
   

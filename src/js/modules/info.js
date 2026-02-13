@@ -1,3 +1,6 @@
+import axios from 'axios';
+import cheerio from 'cheerio';
+
 export const info = () => {
   const info = document.querySelector('#info');
 
@@ -35,6 +38,41 @@ export const info = () => {
     info.querySelector('#weekday').textContent = formatWeekday(currentDate);
   }
 
+  /*function updateWeather() {
+    const token = 'ВАШ_ТОКЕН';
+    const lat = 55.751244; // широта
+    const lon = 37.618423; // долгота
+
+    fetch(`https://api.gismeteo.net/v2/weather/forecast/?lat=${lat}&lon=${lon}`, {
+      headers: {
+        'X-Gismeteo-Token': token
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data); // обработка полученных данных
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+    });
+
+    if (hour >= 7 && hour < 19) {
+      const time = (hour < 10) ? ('0' + hour) : hour + ':00';
+
+      fetch(`/weather.php?lat=${lat}&lon=${lon}&date=${currentDate}&time=${time}`)
+        .then(response => response.json())
+        .then(data => {
+          info.querySelector('#temp').textContent = 't ' + Math.round(data[0].temp_100_cel) + '°C';
+          info.querySelector('#pressure').textContent = Math.round(data[0].pres_surf / 133.322) + ' мм';
+          info.querySelector('#humid').textContent = Math.round(data[0].vlaga_2) + '%';
+          info.querySelector('#wind').textContent = Math.round(data[0].wind_speed_10) + ' м/c';
+        })
+        .catch(error => {
+          console.error('Ошибка:', error);
+        });
+    }
+  }*/
+
   function updateWeather() {
     const lat = 53.507852;
     const lon = 49.420411;
@@ -56,6 +94,8 @@ export const info = () => {
         console.error('Ошибка:', error);
       });
   }
+  
+  
 
   function calculateTimeUntilMinute() {
     const now = new Date();
@@ -78,15 +118,18 @@ export const info = () => {
   }
 
   if (info) {
-    updateClock();
     updatedate();
+    updateClock();
     updateWeather();
 
     const msUntilMinute = calculateTimeUntilMinute();
     const msUntilHour = calculateTimeUntilHour();
     const msUntilMidnight = calculateTimeUntilMidnight();
-    setTimeout(setInterval(updateClock, 60000), msUntilMinute);
-    setTimeout(setInterval(updateWeather, 60 * 60 * 1000), msUntilHour);
-    setTimeout(setInterval(updatedate, 24 * 60 * 60 * 1000), msUntilMidnight);
+    setTimeout(updateClock, msUntilMinute);
+    setInterval(updateClock, 60000);
+    //setTimeout(updateWeather, msUntilHour);
+    //setInterval(updateWeather, 60 * 60 * 1000);
+    setTimeout(updatedate, msUntilMidnight);
+    setInterval(updatedate, 24 * 60 * 60 * 1000);
   }
 }
