@@ -138,7 +138,7 @@ export const player = () => {
       if (files.length > 0) {
         let filteredFiles = files.find(file => file.timeFrom <= hour && file.timeTo > hour);
 
-        if (filteredFiles) {
+        if (filteredFiles.files.length > 0) {
           player(filteredFiles.files, filteredFiles.type);
           info.setAttribute('style', 'display: flex');
         } else {
@@ -152,10 +152,10 @@ export const player = () => {
           const videoPlayer = document.querySelector('.homevideo');
           videoPlayer.poster = '';
           videoPlayer.src = '';
-          //info.setAttribute('style', 'display: none');
+          info.setAttribute('style', 'display: none');
         }
       } else {
-        //info.setAttribute('style', 'display: none');
+        info.setAttribute('style', 'display: none');
       }
     }
   

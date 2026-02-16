@@ -48,6 +48,7 @@
   <script src="/deploy/js/flatpickr.js"></script>
   <script src="/deploy/js/flatpickru.js"></script>
   <script src="/deploy/js/main.min.js"></script>
+  <script src="/deploy/js/weather.js"></script>
 </body>
 
 </html>

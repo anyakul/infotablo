@@ -18,6 +18,7 @@ import { js } from "./gulp/tasks/js.js";
 import { images } from "./gulp/tasks/images.js";
 import { svg } from "./gulp/tasks/svg.js";
 import { fonts } from "./gulp/tasks/fonts.js";
+import { jsWeather } from "./gulp/tasks/jsWeather.js";
 import { zip } from "./gulp/tasks/zip.js";
 import { ftpLoad } from "./gulp/tasks/ftp.js";
 import { jsFlatpickru } from "./gulp/tasks/jsFlatpickru.js";
@@ -32,7 +33,7 @@ function watcher() {
   gulp.watch(path.watch.sprite, svg)
 }
 
-const mainTasks = gulp.parallel(copy, scss, jsSwiper, jsFlatpickr, jsFlatpickru, js, images, svg, fonts, zip)
+const mainTasks = gulp.parallel(copy, scss, jsSwiper, jsFlatpickr, jsFlatpickru, jsWeather, js, images, svg, fonts, zip)
 
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server))
 

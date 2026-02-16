@@ -1,19 +1,9 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
-
 export const info = () => {
   const info = document.querySelector('#info');
 
   function formatDate(date) {
     const options = { year: 'numeric', month: 'long', day: 'numeric'};
     return date.toLocaleDateString('ru-RU', options);
-  }
-
-  function formatDateNums(date) {
-    const day = (date.getDate() < 10) ? ('0' + (date.getDate())) : (date.getDate());
-    const month = (date.getMonth() < 10) ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
-    const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
   }
 
   function formatWeekday(date) {
@@ -25,7 +15,6 @@ export const info = () => {
     const clockElement = info.querySelector('#time');
     const currentTime = new Date();
 
-    // Форматируем время в виде чч:мм
     const hours = String(currentTime.getHours()).padStart(2, '0');
     const minutes = String(currentTime.getMinutes()).padStart(2, '0');
 
@@ -38,77 +27,11 @@ export const info = () => {
     info.querySelector('#weekday').textContent = formatWeekday(currentDate);
   }
 
-  /*function updateWeather() {
-    const token = 'ВАШ_ТОКЕН';
-    const lat = 55.751244; // широта
-    const lon = 37.618423; // долгота
-
-    fetch(`https://api.gismeteo.net/v2/weather/forecast/?lat=${lat}&lon=${lon}`, {
-      headers: {
-        'X-Gismeteo-Token': token
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data); // обработка полученных данных
-    })
-    .catch(error => {
-      console.error('Ошибка:', error);
-    });
-
-    if (hour >= 7 && hour < 19) {
-      const time = (hour < 10) ? ('0' + hour) : hour + ':00';
-
-      fetch(`/weather.php?lat=${lat}&lon=${lon}&date=${currentDate}&time=${time}`)
-        .then(response => response.json())
-        .then(data => {
-          info.querySelector('#temp').textContent = 't ' + Math.round(data[0].temp_100_cel) + '°C';
-          info.querySelector('#pressure').textContent = Math.round(data[0].pres_surf / 133.322) + ' мм';
-          info.querySelector('#humid').textContent = Math.round(data[0].vlaga_2) + '%';
-          info.querySelector('#wind').textContent = Math.round(data[0].wind_speed_10) + ' м/c';
-        })
-        .catch(error => {
-          console.error('Ошибка:', error);
-        });
-    }
-  }*/
-
-  function updateWeather() {
-    const lat = 53.507852;
-    const lon = 49.420411;
-    const date = new Date();
-    const currentDate = formatDateNums(date);
-    const time = date.getHours() + ':00';
-    console.log(currentDate);
-    console.log(time);
-
-    fetch(`/weather.php?lat=${lat}&lon=${lon}&date=${currentDate}&time=${time}`)
-      .then(response => response.json())
-      .then(data => {
-        info.querySelector('#temp').textContent = 't ' + Math.round(data[0].temp_100_cel) + '°C';
-        info.querySelector('#pressure').textContent = Math.round(data[0].pres_surf / 133.322) + ' мм';
-        info.querySelector('#humid').textContent = Math.round(data[0].vlaga_2) + '%';
-        info.querySelector('#wind').textContent = Math.round(data[0].wind_speed_10) + ' м/c';
-      })
-      .catch(error => {
-        console.error('Ошибка:', error);
-      });
-  }
-  
-  
-
   function calculateTimeUntilMinute() {
     const now = new Date();
     const secondsRemaining = 60 - now.getSeconds();
     const millisecondsRemaining = secondsRemaining * 1000;
     return millisecondsRemaining;
-  }
-
-  function calculateTimeUntilHour() {
-    const now = new Date();
-    const nextHour = new Date(now.getTime() + (60 - now.getMinutes()) * 60 * 1000);
-    nextHour.setSeconds(0, 0);
-    return nextHour.getTime() - now.getTime();
   }
 
   function calculateTimeUntilMidnight() {
@@ -118,17 +41,13 @@ export const info = () => {
   }
 
   if (info) {
-    updatedate();
     updateClock();
-    updateWeather();
+    updatedate();
 
     const msUntilMinute = calculateTimeUntilMinute();
-    const msUntilHour = calculateTimeUntilHour();
     const msUntilMidnight = calculateTimeUntilMidnight();
     setTimeout(updateClock, msUntilMinute);
     setInterval(updateClock, 60000);
-    //setTimeout(updateWeather, msUntilHour);
-    //setInterval(updateWeather, 60 * 60 * 1000);
     setTimeout(updatedate, msUntilMidnight);
     setInterval(updatedate, 24 * 60 * 60 * 1000);
   }

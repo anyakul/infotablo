@@ -16,6 +16,7 @@ export const path = {
   src: {
     jsFlatpickr: `${srcFolder}/js/flatpickr.js`,
     jsFlatpickru: `${srcFolder}/js/flatpickru.js`,
+    jsWeather: `${srcFolder}/js/weather.js`,
     jsSwiper: `${srcFolder}/js/swiper.bundle.js`,
     js: `${srcFolder}/js/main.js`,
     images: `${srcFolder}/img/*.{jpeg,jpg,png,svg,webp,mp4}`,

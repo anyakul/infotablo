@@ -11,6 +11,8 @@ $token = PROJECTEOL_TOKEN;
 
 $url = "https://projecteol.ru/api/weather/?lat={$lat}&lon={$lon}&date={$date}T{$time}&token={$token}";
 
+//$url = "https://api.gismeteo.net/v3/weather/current/?latitude={$lat}&longitude={$lon}&token={$token}";
+
 $response = file_get_contents($url);
 
 if (!$response) {
