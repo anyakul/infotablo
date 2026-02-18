@@ -15,7 +15,7 @@ export function slider() {
     fadeEffect: {
       crossFade: true,
     },
-    speed: 1000.
+    speed: 1000
   })
 
   if (swiper.slides.length > 1) {

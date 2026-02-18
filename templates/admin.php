@@ -13,7 +13,7 @@
     <form id="admin-form" method="post" action="" method="post" enctype="multipart/form-data">
       <div class="calendar">
         <div id="calendar"></div>
-        <button id="gotoToday" type="submit">Перейти к сегодня</button>
+        <button id="gotoToday" type="button">Перейти к сегодня</button>
       </div>
       <table class="admin-table">
         <input id="selectedDate" name="date" type="hidden">

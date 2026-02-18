@@ -182,8 +182,8 @@ export const player = () => {
                 document.querySelector('.swiper-wrapper').innerHTML = output;
               }
             }
+            slider.slider();
           }
-          slider.slider();
 
           // Вспомогательная функция для сравнения массивов
           function areArraysEqual(arr1, arr2) {

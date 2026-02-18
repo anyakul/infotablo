@@ -9,7 +9,7 @@ const weather = () => {
     return `${year}-${month}-${day}`;
   }
 
-  /*function updateWeather() {
+  function updateWeather() {
     const lat = 53.507852;
     const lon = 49.420411;
     const date = new Date();
@@ -27,9 +27,9 @@ const weather = () => {
       .catch(error => {
         console.error('Ошибка:', error);
       });
-  }*/
+  }
 
-  function updateWeather() {
+  /*function updateWeather() {
     const lat = 53.507852;
     const lon = 49.420411;
     const date = new Date();
@@ -50,7 +50,7 @@ const weather = () => {
           console.error('Ошибка:', error);
         });
     }
-  }
+  }*/
 
   function calculateTimeUntilHour() {
     const now = new Date();

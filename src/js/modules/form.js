@@ -2,39 +2,51 @@ export const form = () => {
 
   const forms = document.querySelector('#admin-form');
 
+  function calculateTimeUntilMidnight() {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    return tomorrow.getTime() - now.getTime();
+  }
+
   if (forms) {
-    const date = new Date();
-    const day = (date.getDate() < 10) ? ('0' + (date.getDate())) : (date.getDate());
-    const month = (date.getMonth() < 10) ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
-    const year = date.getFullYear();
-    const formattedDate = `${year}-${month}-${day}`;
-    forms.querySelector('#selectedDate').value = formattedDate;
+    fetchFunc();
+    //такой код получает данные за нужную дату но не выделяет сегодняшнее число в календаре при нажатии на goToToday
 
-    fetchFunc(formattedDate);
+    updatePage();
 
-    const calendar = flatpickr("#calendar", {
-      inline: true,
-      disableMobile: true,
-      minDate: new Date(),
-      defaultDate: new Date(),
-      locale: 'ru',
-    });
+    function updatePage() {
+      const calendar = flatpickr("#calendar", {
+        inline: true,
+        disableMobile: true,
+        minDate: new Date(),
+        defaultDate: new Date(),
+        locale: 'ru',
+      });
 
-    calendar.config.onChange.push(function(selectedDates, dateStr, instance) {
-      document.getElementById('selectedDate').value = dateStr;
-      fetchFunc(dateStr);
-    });
+      calendar.config.onChange.push(function(selectedDates, dateStr, instance) {
+        fetchFunc(dateStr);
+      });
 
-    document.querySelector('#gotoToday').addEventListener('click', function() {
-      calendar.jumpToDate(new Date());
-      fetchFunc(formattedDate);
-    });
+      document.querySelector('#gotoToday').addEventListener('click', function() {
+        calendar.jumpToDate(new Date());
+        fetchFunc();
+      });
+      forms.addEventListener('submit', fetchEditFunc);
+    }
 
-    function fetchFunc(dates) {
+    function fetchFunc(formattedDate) {
+      if (!formattedDate) {
+        const dates = new Date();
+        const day = (dates.getDate() < 10) ? ('0' + (dates.getDate())) : (dates.getDate());
+        const month = (dates.getMonth() < 10) ? ('0' + (dates.getMonth() + 1)) : (dates.getMonth() + 1);
+        const year = dates.getFullYear();
+        formattedDate = `${year}-${month}-${day}`;
+      }
+      document.getElementById('selectedDate').value = formattedDate;
       fetch(`data.php`, {
         method: 'POST',
         body: new URLSearchParams({
-          date: dates
+          date: formattedDate
         })
       })
       .then(response => response.json())
@@ -42,8 +54,12 @@ export const form = () => {
         if (data.success) {
           processResponse(data);
           mainFunc();
+          const msUntilMidnight = calculateTimeUntilMidnight();
+          setTimeout(updatePage, msUntilMidnight);
+          setInterval(updatePage, 24 * 60 * 60 * 1000);
+          setTimeout(fetchFunc, msUntilMidnight);
+          setInterval(fetchFunc, 24 * 60 * 60 * 1000);
 
-          forms.addEventListener('submit', fetchEditFunc);
         } else {
           console.error('Ошибка:', data.message);
         }
@@ -51,27 +67,6 @@ export const form = () => {
       .catch(error => {
         console.error("There was an error:", error);
       });
-    }
-
-    async function fetchEditFunc(event) {
-      event.preventDefault();
-
-      const formData = new FormData(this);
-
-      // Убираем ненужный заголовок Content-Type
-      const response = await fetch('edit.php', {
-        method: 'POST',
-        body: formData
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        fetchFunc(document.getElementById('selectedDate').value);
-        mainFunc();
-      } else {
-        console.error('Ошибка:', data.message);
-      }
     }
 
     function mainFunc() {
@@ -92,6 +87,27 @@ export const form = () => {
             newList.append(li);
           }
         })
+      }
+    }
+
+    async function fetchEditFunc(event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+
+      // Убираем ненужный заголовок Content-Type
+      const response = await fetch('edit.php', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        fetchFunc(document.getElementById('selectedDate').value);
+        mainFunc();
+      } else {
+        console.error('Ошибка:', data.message);
       }
     }
 
