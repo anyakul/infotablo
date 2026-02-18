@@ -19,7 +19,10 @@ export function slider() {
   })
 
   if (swiper.slides.length > 1) {
+    swiper.init();
     swiper.params.autoplay.enabled = true;
     swiper.autoplay.start();
+  } else {
+    swiper.destroy();
   }
 }

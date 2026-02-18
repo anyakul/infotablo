@@ -9,9 +9,9 @@ $date = $_GET['date'];
 $time = $_GET['time'];
 $token = PROJECTEOL_TOKEN;
 
-$url = "https://projecteol.ru/api/weather/?lat={$lat}&lon={$lon}&date={$date}T{$time}&token={$token}";
+//$url = "https://projecteol.ru/api/weather/?lat={$lat}&lon={$lon}&date={$date}T{$time}&token={$token}";
 
-//$url = "https://api.gismeteo.net/v3/weather/current/?latitude={$lat}&longitude={$lon}&token={$token}";
+$url = "https://api.gismeteo.net/v3/weather/current/?latitude={$lat}&longitude={$lon}&token={$token}";
 
 $response = file_get_contents($url);
 
@@ -26,5 +26,4 @@ if (json_decode($response) === null) {
 
 header('Content-Type: application/json');
 echo $response;
-//http://infotablo/weather.php?lat=55.751244&lon=37.618423&date=2026-02-11T21:00
 ?>
