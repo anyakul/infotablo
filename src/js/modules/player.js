@@ -16,6 +16,16 @@ export const player = () => {
     return millisecondsRemaining;
   }
 
+  function updateClock() {
+    const clockElement = info.querySelector('#time');
+    const currentTime = new Date();
+
+    const hours = String(currentTime.getHours()).padStart(2, '0');
+    const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+
+    clockElement.textContent = `${hours}:${minutes}`;
+  }
+
   if (player) {
     const info = playerWrapper.querySelector('#info');
 
@@ -48,6 +58,7 @@ export const player = () => {
           setInterval(playerFunc, 60 * 1000);
 
           function playerFunc() {
+            updateClock();
             let date = new Date();
             let hour = date.getHours();
             const playerBlocks = document.querySelectorAll('.player-block');

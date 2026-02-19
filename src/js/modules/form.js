@@ -10,7 +10,6 @@ export const form = () => {
 
   if (forms) {
     fetchFunc();
-    //такой код получает данные за нужную дату но не выделяет сегодняшнее число в календаре при нажатии на goToToday
 
     updatePage();
 
@@ -29,6 +28,7 @@ export const form = () => {
 
       document.querySelector('#gotoToday').addEventListener('click', function() {
         calendar.jumpToDate(new Date());
+        calendar.setDate(new Date());
         fetchFunc();
       });
       forms.addEventListener('submit', fetchEditFunc);
