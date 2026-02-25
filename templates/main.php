@@ -33,7 +33,6 @@
           <img src="/deploy/img/ветер.svg" width="20" height="20" alt="Ветер">
           <span class="info-item-span" id="wind"></span>
         </p>
-        <!--<p class="info-item">Компания АДОР основана в 2002 году</p>-->
       </div>
       <div class="info-column">
         <p class="info-item" id="weekday">Среда</p>

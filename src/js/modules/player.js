@@ -141,17 +141,13 @@ export const player = () => {
               if (type === 'video') {
                 output += `
                   <div class="swiper-slide">
-                    <video class="homevideo" autoplay src="" muted poster="">
+                    <video class="homevideo" autoplay src="" loop muted poster="">
                   </div>
                 `;
                 document.querySelector('.swiper-wrapper').innerHTML = output;
                 const videoPlayer = document.querySelector('.homevideo');
                 videoPlayer.poster = '';
                 videoPlayer.src = '/uploads/' + filesNow[video_count];
-                videoPlayer.addEventListener("ended", function (){
-                  videoPlayer.play();
-                }, false);
-                videoPlayer.play();
               } else {
                 output += `
                   <div class="swiper-slide">
