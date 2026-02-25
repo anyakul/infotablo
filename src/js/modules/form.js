@@ -31,7 +31,15 @@ export const form = () => {
           function(date) {
             return date.getDay() === 0 || date.getDay() === 6;
           }
-        ]
+        ],
+        onReady: function(selectedDates, dateStr, instance) {
+          const today = new Date();
+          const currentDay = today.getDay();
+          if (currentDay === 0 || currentDay === 6) {
+            today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
+          }
+          instance.setDate(today);
+        }
       });
 
       const calendarTo = flatpickr("#calendar-to", {
@@ -44,7 +52,15 @@ export const form = () => {
           function(date) {
             return date.getDay() === 0 || date.getDay() === 6;
           }
-        ]
+        ],
+        onReady: function(selectedDates, dateStr, instance) {
+          const today = new Date();
+          const currentDay = today.getDay();
+          if (currentDay === 0 || currentDay === 6) {
+            today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
+          }
+          instance.setDate(today);
+        }
       });
 
       calendarFrom.config.onChange.push(function(selectedDates, dateStr, instance) {
@@ -58,8 +74,6 @@ export const form = () => {
 
       calendarTo.config.onChange.push(function(selectedDates, dateStr, instance) {
         document.getElementById('selectedDateTo').value = dateStr;
-        console.log(dateStr === getFormattedDate());
-        console.log(dateStr);
         if (instance.element.id === 'calendar-to') {
           if (selectedDates[0] < calendarFrom.selectedDates[0]) {
             calendarFrom.setDate(selectedDates[0], true, true);
