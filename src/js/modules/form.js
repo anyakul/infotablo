@@ -16,8 +16,6 @@ export const form = () => {
     return `${year}-${month}-${day}`;
   }
 
-  
-
   if (forms) {
     fetchFunc();
     updatePage();
@@ -29,6 +27,11 @@ export const form = () => {
         minDate: new Date(),
         defaultDate: new Date(),
         locale: 'ru',
+        disable: [
+          function(date) {
+            return date.getDay() === 0 || date.getDay() === 6;
+          }
+        ]
       });
 
       const calendarTo = flatpickr("#calendar-to", {
@@ -37,6 +40,11 @@ export const form = () => {
         minDate: new Date(),
         defaultDate: new Date(),
         locale: 'ru',
+        disable: [
+          function(date) {
+            return date.getDay() === 0 || date.getDay() === 6;
+          }
+        ]
       });
 
       calendarFrom.config.onChange.push(function(selectedDates, dateStr, instance) {

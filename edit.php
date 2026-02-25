@@ -13,13 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $startDate = date_create($_POST['date-from']);
   $endDate = date_create($_POST['date-to']);
   $endDate->modify('+1 day');
-  $interval = DateInterval::createFromDateString('1 day'); // Интервал в один день
+  $interval = DateInterval::createFromDateString('1 day');
   $period = new DatePeriod($startDate, $interval, $endDate);
 
   $allDates = [];
 
   foreach ($period as $dt) {
-    $allDates[] = $dt->format('Y-m-d');
+    $dayOfWeek = (int)$dt->format('w');
+    if ($dayOfWeek !== 0 && $dayOfWeek !== 6) {
+      $allDates[] = $dt->format('Y-m-d');
+    }
   }
 
   foreach ($allDates as $date) {
