@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/deploy/css/style.min.css">
 </head>
 
-<body class="container">
+<body class="container-player">
   <div id="player">
     <div class="swiper">
       <div class="swiper-wrapper"></div>

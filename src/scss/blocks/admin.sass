@@ -1,13 +1,45 @@
+.container
+  position: relative
+  box-sizing: border-box
+  width: 100%
+  max-width: 1920px
+  margin: 0 auto
+  padding: 20px
+
+  p
+    font-size: 14px
+
 .calendar
+  position: relative
+  margin-top: -30px
+  padding-top: 30px
   width: 307px
   margin-bottom: 20px
 
-  #gotoToday
+  p
+    display: none
+
+  #gotoTodayFrom,
+  #gotoTodayTo
     display: flex
     width: fit-content
     margin-left: auto
     margin-top: 10px
     font-size: 12px
+
+.calendar-to
+  display: none
+
+.calendars-period
+  .calendar-to
+    display: block
+
+  .calendar
+    p
+      position: absolute
+      top: 0
+      left: 0
+      display: block
 
 .admin-table
   width: 100%
@@ -26,8 +58,8 @@
 
   th,
   td
-    padding: 5px
     vertical-align: top
+    padding: 5px
     border: 1px solid $brown
     border-collapse: collapse
 
@@ -46,18 +78,6 @@
 
   .admin-delete-file:checked + label
     text-decoration: line-through
-
-  .admin-delete-time + label
-    display: flex
-    width: fit-content
-    font-size: 14px
-    line-height: 18px
-
-  .admin-delete-time + label::after
-    content: "Удалить время"
-
-  .admin-delete-time:checked + label::after
-    content: "Восстановить время"
 
 .admin-time
   width: 115px
@@ -80,39 +100,21 @@
     width: 100px
     min-width: 100px
     
-    .admin-item-image
-      position: relative
-      left: 0
-      top: 0
-      display: block
-      width: 100px
-      height: 100px
+.admin-item-image
+  position: relative
+  display: block
+  width: 100px
+  height: 100px
 
-      video
-        width: 100%
-        height: 100%
-        min-height: 100%
-        object-fit: cover
-
-.admin-action
-  width: 140px
+  video
+    width: 100%
+    height: 100%
+    min-height: 100%
+    object-fit: cover
 
 .input-file
   position: relative
   display: inline-block
-
-.input-file-btn
-  position: relative
-  text-decoration: none
-  text-align: center
-  line-height: 22px
-  height: 40px
-  padding: 10px 20px
-  box-sizing: border-box
-  border: none
-  margin: 0
-  transition: background-color 0.2s
-  border: 1px solid $brown
 
 .input-file input[type=file]
   position: absolute
@@ -146,9 +148,9 @@
   margin-left: auto
   margin-top: 20px
   padding: 0 40px
+  border-radius: 4px
   font-size: 14px
   line-height: 20px
-  border-radius: 4px
   background-color: $brown
   white-space: nowrap
   color: $white
@@ -158,3 +160,7 @@
     &:active,
     &:focus
       opacity: 0.8
+
+.calendars
+  display: flex
+  gap: 30px

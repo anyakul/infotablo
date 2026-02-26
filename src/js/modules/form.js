@@ -17,6 +17,7 @@ export const form = () => {
   }
 
   if (forms) {
+    const calendarButton = forms.querySelector('#calendar-button');
     fetchFunc();
     updatePage();
 
@@ -42,6 +43,21 @@ export const form = () => {
         }
       });
 
+      calendarButton.addEventListener('click', function() {
+        if (forms.classList.contains('calendars-period')) {
+          forms.classList.remove('calendars-period');
+          fetchFunc();
+          document.getElementById('selectedDateTo').value = getFormattedDate();
+          calendarFrom.setDate(new Date());
+          calendarTo.setDate(new Date());
+          calendarButton.textContent = 'Добавить период';
+        } else {
+          forms.classList.add('calendars-period');
+          document.getElementById('selectedDateTo').value = document.getElementById('selectedDateFrom').value;
+          calendarButton.textContent = 'Убрать второй календарь';
+        }
+      })
+
       const calendarTo = flatpickr("#calendar-to", {
         inline: true,
         disableMobile: true,
@@ -66,8 +82,13 @@ export const form = () => {
       calendarFrom.config.onChange.push(function(selectedDates, dateStr, instance) {
         fetchFunc(dateStr);
         if (instance.element.id === 'calendar-from') {
-          if (selectedDates[0] >= calendarTo.selectedDates[0]) {
+          if (forms.classList.contains('calendars-period')) {
+            if (selectedDates[0] >= calendarTo.selectedDates[0]) {
+              calendarTo.setDate(selectedDates[0], true, true);
+            }
+          } else {
             calendarTo.setDate(selectedDates[0], true, true);
+            document.getElementById('selectedDateTo').value = document.getElementById('selectedDateFrom').value;
           }
         }
       });
@@ -89,6 +110,10 @@ export const form = () => {
         calendarFrom.jumpToDate(new Date());
         calendarFrom.setDate(new Date());
         fetchFunc();
+        if (!forms.classList.contains('calendars-period')) {
+          calendarTo.setDate(new Date());
+          document.getElementById('selectedDateTo').value = document.getElementById('selectedDateFrom').value;
+        }
       });
 
       document.querySelector('#gotoTodayTo').addEventListener('click', function() {

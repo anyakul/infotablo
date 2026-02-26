@@ -12,20 +12,21 @@
     <a class="logout-link" href="logout.php">Выйти из админки</a>
     <form id="admin-form" method="post" action="" method="post" enctype="multipart/form-data">
       <div class="calendars">
-        <div class="calendar">
+        <div class="calendar calendar-before">
           <p>От даты</p>
           <div id="calendar-from"></div>
           <button id="gotoTodayFrom" type="button">Перейти к сегодня</button>
         </div>
-        <div class="calendar">
+        <div class="calendar calendar-to">
           <p>До даты</p>
           <div id="calendar-to"></div>
           <button id="gotoTodayTo" type="button">Перейти к сегодня</button>
         </div>
+        <button id="calendar-button" type="button">Добавить период</button>
       </div>
       <table class="admin-table">
-        <input id="selectedDateFrom" name="date-from">
-        <input id="selectedDateTo" name="date-to">
+        <input id="selectedDateFrom" name="date-from" type="hidden">
+        <input id="selectedDateTo" name="date-to" type="hidden">
         <thead>
           <tr>
             <th>Время с:</th>
