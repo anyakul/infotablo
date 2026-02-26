@@ -13,26 +13,6 @@ const weather = () => {
     const lon = 49.420411;
     const date = new Date();
     const currentDate = formatDateNums(date);
-    const time = date.getHours() + ':00';
-
-    fetch(`/weather.php?lat=${lat}&lon=${lon}&date=${currentDate}&time=${time}`)
-      .then(response => response.json())
-      .then(data => {
-        info.querySelector('#temp').textContent = 't ' + Math.round(data[0].temp_100_cel) + '°C';
-        info.querySelector('#pressure').textContent = Math.round(data[0].pres_surf / 133.322) + ' мм';
-        info.querySelector('#humid').textContent = Math.round(data[0].vlaga_2) + '%';
-        info.querySelector('#wind').textContent = Math.round(data[0].wind_speed_10) + ' м/c';
-      })
-      .catch(error => {
-        console.error('Ошибка:', error);
-      });
-  }
-
-  /*function updateWeather() {
-    const lat = 53.507852;
-    const lon = 49.420411;
-    const date = new Date();
-    const currentDate = formatDateNums(date);
     const time = date.getHours();
 
     if (time >= 7 && time < 19) {
@@ -49,7 +29,7 @@ const weather = () => {
           console.error('Ошибка:', error);
         });
     }
-  }*/
+  }
 
   function calculateTimeUntilHour() {
     const now = new Date();
