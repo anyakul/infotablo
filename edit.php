@@ -120,10 +120,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $deleteFiles = $_POST['delete-files-' . $index];
 
       if (!empty($deleteFiles)) {
-        foreach ($deleteFiles as $fileId) {
-          $sql_delete_files = "DELETE FROM files WHERE files = '$fileId' AND time_id = '$time_id'";
+        foreach ($deleteFiles as $fileName) {
+          $sql_delete_files = "DELETE FROM files WHERE files = '$fileName' AND time_id = '$time_id'";
           $stmt_delete_files = db_get_prepare_stmt($con, $sql_delete_files);
           $res_file  = mysqli_stmt_execute($stmt_delete_files);
+          $file_id_sql = "SELECT id FROM files WHERE files = '$fileName'";
+          $file_id_query = mysqli_query($con, $file_id_sql);
+          $count = mysqli_num_rows($file_id_query);
+
+          if ($count === 0) {
+            $uploadDir = "uploads/";
+            $fullPath = $uploadDir . $fileName;
+            unlink($fullPath);
+          }
         }
       }
       $index = $index + 1;

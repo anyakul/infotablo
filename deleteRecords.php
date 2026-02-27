@@ -7,6 +7,48 @@ include('helpers.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+  $files_sql = "
+    SELECT f.files FROM files f
+    WHERE f.time_id IN (
+      SELECT t.id
+      FROM times t
+      WHERE t.date_id IN (
+        SELECT d.id
+        FROM dates d
+        WHERE d.dates < CURDATE()
+      )
+    )
+  ";
+
+  $res_files = mysqli_query($con, $files_sql);
+  $files = mysqli_fetch_all($res_files, MYSQLI_ASSOC);
+
+  foreach ($files as $file) {
+    $fileName = $file['files'];
+    $files_name_sql = "
+      SELECT id FROM files f
+      WHERE f.files = '$fileName' 
+      AND f.time_id IN (
+        SELECT t.id
+        FROM times t
+        WHERE t.date_id IN (
+          SELECT d.id
+          FROM dates d
+          WHERE d.dates >= CURDATE()
+        )
+      )
+    ";
+
+    $files_name_query = mysqli_query($con, $files_name_sql);
+    $count = mysqli_num_rows($files_name_query);
+
+    if ($count === 0) {
+      $uploadDir = "uploads/";
+      $fullPath = $uploadDir . $fileName;
+      unlink($fullPath);
+    }
+  }
+
   // Удаляем связанные файлы
   $sqlDeleteFiles = "
       DELETE FROM files
@@ -23,7 +65,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $stmt_DeleteFiles = db_get_prepare_stmt($con, $sqlDeleteFiles);
   $res_DeleteFiles = mysqli_stmt_execute($stmt_DeleteFiles);
 
-// Удаляем временные интервалы за вчерашний день и ранее
+  // Удаляем связанные файлы
+  $sqlDeleteFiles = "
+      DELETE FROM files
+      WHERE time_id IN (
+        SELECT id
+        FROM times
+        WHERE date_id IN (
+            SELECT id
+            FROM dates
+            WHERE dates < CURDATE()
+        )
+      )
+  ";
+  $stmt_DeleteFiles = db_get_prepare_stmt($con, $sqlDeleteFiles);
+  $res_DeleteFiles = mysqli_stmt_execute($stmt_DeleteFiles);
+
   $sqlDeleteTimes = "
       DELETE FROM times
       WHERE date_id IN (
@@ -35,7 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $stmt_DeleteTimes = db_get_prepare_stmt($con, $sqlDeleteTimes);
   $res_DeleteTimes = mysqli_stmt_execute($stmt_DeleteTimes);
 
-  // Удаляем оставшиеся даты (которые стали пустыми)
   $sqlDeleteEmptyDates = "
       DELETE FROM dates
       WHERE id NOT IN (

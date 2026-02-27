@@ -9,13 +9,15 @@ $date = $_GET['date'];
 $time = $_GET['time'];
 $token = GISMETEO_TOKEN;
 
-$url = "https://api.gismeteo.net/v3/weather/current/?latitude={$lat}&longitude={$lon}&token={$token}";
+$url = "https://api.gismeteo.net/v3/weather/current/?latitude=${lat}&longitude=${lon}&token={$token}";
 
 $response = file_get_contents($url);
 
 if (!$response) {
     die('Ошибка при чтении данных');
 }
+
+// Проверяем, что ответ валиден
 if (json_decode($response) === null) {
     die('Недопустимый JSON');
 }

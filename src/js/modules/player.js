@@ -214,11 +214,12 @@ export const player = () => {
     }
 
     getdata();
+    fetchDeleteFunc();
 
     function fetchDeleteFunc() {
       const response = fetch('deleteRecords.php', {
         method: 'POST',
-      });
+      })
     }
 
     function processResponse(response) {

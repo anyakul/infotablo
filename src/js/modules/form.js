@@ -54,7 +54,7 @@ export const form = () => {
         } else {
           forms.classList.add('calendars-period');
           document.getElementById('selectedDateTo').value = document.getElementById('selectedDateFrom').value;
-          calendarButton.textContent = 'Убрать второй календарь';
+          calendarButton.textContent = 'Скрыть второй календарь';
         }
       })
 

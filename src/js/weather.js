@@ -7,7 +7,6 @@ const weather = () => {
     const year = date.getFullYear();
     return `${year}-${month}-${day}`;
   }
-
   function updateWeather() {
     const lat = 53.507852;
     const lon = 49.420411;
@@ -28,8 +27,10 @@ const weather = () => {
         .catch(error => {
           console.error('Ошибка:', error);
         });
+      }
     }
-  }
+
+
 
   function calculateTimeUntilHour() {
     const now = new Date();
