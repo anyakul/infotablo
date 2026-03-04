@@ -201,176 +201,176 @@ export const form = () => {
       }
     }
 
+    function extractFirstFrame(videoSrc, successCallback) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const video = document.createElement('video');
+
+      video.src = videoSrc;
+      video.crossOrigin = 'anonymous'; // Для кросс-доменных ресурсов
+
+      video.oncanplaythrough = function() {
+        video.currentTime = 2;
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const thumbnailBase64 = canvas.toDataURL('image/jpeg');
+        successCallback(thumbnailBase64);
+      };
+
+      video.onerror = function(e) {
+        console.error('Ошибка загрузки видео:', e);
+      };
+
+      video.load();
+    }
+
     function processResponse(response) {
-      let output7 = '';
-      let output8 = '';
-      let output12 = '';
-      let output13 = '';
-      let output17 = '';
-      let outputinput7 = '';
-      let outputinput8 = '';
-      let outputinput12 = '';
-      let outputinput13 = '';
-      let outputinput17 = '';
       let times = response.times;
       let files = response.files;
+      let curDate = document.getElementById('selectedDateFrom').getAttribute('value');
+      const parsedDate = new Date(curDate);
+
+      const formattedDate = parsedDate.toLocaleDateString('ru-RU', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+      });
+
+      function getOutput(file, type, index, indexFile, time) {
+        return `<li class="admin-files-item" data-files="${type}">
+  <span class="admin-item-image">
+  <a data-fancybox="group" data-caption="${formattedDate} ${time}" data-audio="false" href="/uploads/${file}" data-thumb="" title="Показать подробнее"></a>
+  ${type === 'image' ?
+  `<video poster="/uploads/${file}" width="200" height="200"></video>` :
+  `<video src="/uploads/${file}" width="200" height="200"></video>`
+  }
+  </span>
+  <p>
+  <input id="file-${index}-${indexFile}" class="admin-delete-file" type="checkbox" name="delete-files-${index}[]" value="${file}">
+  <label for="file-${index}-${indexFile}">${file}</label>
+  </p>
+  </li>`
+      }
+
+      function getInputOutput(index) {
+        return `<ul class="admin-new-file-list admin-new-file-list-${index}"></ul>
+          <div class="admin-input-files">
+          <label class="input-file" for="file-new-${index}">
+            <input name="files-${index}[]" id="file-new-${index}" type="file" multiple accept="image/*, video/*">
+            <span class="admin-file-btn">Выберите файлы</span>
+          </label>
+        </div>`
+      }
+
+      function itemsForeach(items) {
+        items.forEach((item) => {
+          let link = item.querySelector('a');
+          let videoSrc = link.getAttribute('href');
+          if (items[0] && items[0].getAttribute('data-files') == 'video') {
+            extractFirstFrame(videoSrc, base64Thumbnail => {
+              link.dataset.thumb = base64Thumbnail;
+            });
+          } else {
+            link.dataset.thumb = videoSrc;
+          }
+        })
+      }
+
       if (times && Array.isArray(times)) {
+        const adminItem7 = forms.querySelector('.admin-item-7');
+        const adminItem8 = forms.querySelector('.admin-item-8');
+        const adminItem12 = forms.querySelector('.admin-item-12');
+        const adminItem13 = forms.querySelector('.admin-item-13');
+        const adminItem17 = forms.querySelector('.admin-item-17');
+        const oldFiles7 = adminItem7.querySelector('.admin-old-files-list');
+        const newFiles7 = adminItem7.querySelector('.admin-new-files');
+        const oldFiles8 = adminItem8.querySelector('.admin-old-files-list');
+        const newFiles8 = adminItem8.querySelector('.admin-new-files');
+        const oldFiles12 = adminItem12.querySelector('.admin-old-files-list');
+        const newFiles12 = adminItem12.querySelector('.admin-new-files');
+        const oldFiles13 = adminItem13.querySelector('.admin-old-files-list');
+        const newFiles13 = adminItem13.querySelector('.admin-new-files');
+        const oldFiles17 = adminItem17.querySelector('.admin-old-files-list');
+        const newFiles17 = adminItem17.querySelector('.admin-new-files');
+        oldFiles7.innerHTML = ''
+        newFiles7.innerHTML = getInputOutput(0);
+        oldFiles8.innerHTML = ''
+        newFiles8.innerHTML = getInputOutput(1);
+        oldFiles12.innerHTML = ''
+        newFiles12.innerHTML = getInputOutput(2);
+        oldFiles13.innerHTML = ''
+        newFiles13.innerHTML = getInputOutput(3);
+        oldFiles17.innerHTML = ''
+        newFiles17.innerHTML = getInputOutput(4);
         times.forEach((time) => {
           let index_file = 0;
 
           if (time.time_from == 7) {
+            let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output7 += `<li class="admin-files-item">
-  <span class="admin-item-image">
-  ${file.types === 'image' ?
-  `<video poster="/uploads/${file.files}" width="200" height="200"></video>` :
-  `<video src="/uploads/${file.files}" width="200" height="200"></video>`
-  }
-  </span>
-  <p>
-  <input id="file-0-${index_file}" class="admin-delete-file" type="checkbox" name="delete-files-0[]" value="${file.files}">
-  <label for="file-0-${index_file}">${file.files}</label>
-  </p>
-                </li>`;
+                output += getOutput(file.files, file.types, '0', index_file, '07.00-08.00');
                 index_file++;
               }
             })
+            oldFiles7.innerHTML = output;
+            let items = oldFiles7.querySelectorAll('.admin-files-item');
+            itemsForeach(items);
           }
 
           if (time.time_from == 8) {
+            let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output8 += `<li class="admin-files-item">
-  <span class="admin-item-image">
-  ${file.types === 'image' ?
-  `<video poster="/uploads/${file.files}" width="200" height="200"></video>` :
-  `<video src="/uploads/${file.files}" width="200" height="200"></video>`
-  }
-  </span>
-  <p>
-  <input id="file-1-${index_file}" class="admin-delete-file" type="checkbox" name="delete-files-1[]" value="${file.files}">
-  <label for="file-1-${index_file}">${file.files}</label>
-  </p>
-                </li>`;
+                output += getOutput(file.files, file.types, '1', index_file, '08.00-12.00');
                 index_file++;
               }
             })
+            oldFiles8.innerHTML = output;
+            let items = oldFiles8.querySelectorAll('.admin-files-item');
+            itemsForeach(items);
           }
 
           if (time.time_from == 12) {
+            let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output12 += `<li class="admin-files-item">
-  <span class="admin-item-image">
-  ${file.types === 'image' ?
-  `<video poster="/uploads/${file.files}" width="200" height="200"></video>` :
-  `<video src="/uploads/${file.files}" width="200" height="200"></video>`
-  }
-  </span>
-  <p>
-  <input id="file-2-${index_file}" class="admin-delete-file" type="checkbox" name="delete-files-2[]" value="${file.files}">
-  <label for="file-2-${index_file}">${file.files}</label>
-  </p>
-                </li>`;
+                output += getOutput(file.files, file.types, '2', index_file, '12.00-13.00');
                 index_file++;
               }
             })
+            oldFiles12.innerHTML = output;
+            let items = oldFiles12.querySelectorAll('.admin-files-item');
+            itemsForeach(items);
           }
 
           if (time.time_from == 13) {
+            let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output13 += `<li class="admin-files-item">
-  <span class="admin-item-image">
-  ${file.types === 'image' ?
-  `<video poster="/uploads/${file.files}" width="200" height="200"></video>` :
-  `<video src="/uploads/${file.files}" width="200" height="200"></video>`
-  }
-  </span>
-  <p>
-  <input id="file-3-${index_file}" class="admin-delete-file" type="checkbox" name="delete-files-3[]" value="${file.files}">
-  <label for="file-3-${index_file}">${file.files}</label>
-  </p>
-                </li>`;
-              }
-            })
-            index_file++;
-          }
-
-          if (time.time_from == 17) {
-            files.forEach((file) => {
-              if (file.time_id === time.id) {
-                output17 += `<li class="admin-files-item">
-  <span class="admin-item-image">
-  ${file.types === 'image' ?
-  `<video poster="/uploads/${file.files}" width="200" height="200"></video>` :
-  `<video src="/uploads/${file.files}" width="200" height="200"></video>`
-  }
-  </span>
-  <p>
-  <input id="file-4-${index_file}" class="admin-delete-file" type="checkbox" name="delete-files-4[]" value="${file.files}">
-  <label for="file-4-${index_file}">${file.files}</label>
-  </p>
-                </li>`;
+                output += getOutput(file.files, file.types, '3', index_file, '13.00-17.00');
                 index_file++;
               }
             })
+            oldFiles13.innerHTML = output;
+            let items = oldFiles13.querySelectorAll('.admin-files-item');
+            itemsForeach(items);
+          }
+
+          if (time.time_from == 17) {
+            let output = '';
+            files.forEach((file) => {
+              if (file.time_id === time.id) {
+                output += getOutput(file.files, file.types, '4', index_file, '17.00-18.00');
+                index_file++;
+              }
+            })
+            oldFiles17.innerHTML = output;
+            let items = oldFiles17.querySelectorAll('.admin-files-item');
+            itemsForeach(items);
           }
         });
-
-        outputinput7 += `<ul class="admin-new-file-list admin-new-file-list-0"></ul>
-          <div class="admin-input-files">
-          <label class="input-file" for="file-new-0">
-            <input name="files-0[]" id="file-new-0" type="file" multiple accept="image/*, video/*">
-            <span class="admin-file-btn">Выберите файлы</span>
-          </label>
-        </div>`;
-
-        outputinput8 += `<ul class="admin-new-file-list admin-new-file-list-1"></ul>
-          <div class="admin-input-files">
-          <label class="input-file" for="file-new-1">
-            <input name="files-1[]" id="file-new-1" type="file" multiple accept="image/*, video/*">
-            <span class="admin-file-btn">Выберите файлы</span>
-          </label>
-        </div>`;
-
-        outputinput12 += `<ul class="admin-new-file-list admin-new-file-list-2"></ul>
-          <div class="admin-input-files">
-            <label class="input-file" for="file-new-2">
-              <input name="files-2[]" id="file-new-2" type="file" multiple accept="image/*, video/*">
-              <span class="admin-file-btn">Выберите файлы</span>
-            </label>
-          </div>
-        </div>`;
-
-        outputinput13 += `<ul class="admin-new-file-list admin-new-file-list-3"></ul>
-          <div class="admin-input-files">
-          <label class="input-file" for="file-new-3">
-            <input name="files-3[]" id="file-new-3" type="file" multiple accept="image/*, video/*">
-            <span class="admin-file-btn">Выберите файлы</span>
-          </label>
-        </div>`;
-
-        outputinput17 += `<ul class="admin-new-file-list admin-new-file-list-4"></ul>
-          <div class="admin-input-files">
-          <label class="input-file" for="file-new-4">
-            <input name="files-4[]" id="file-new-4" type="file" multiple accept="image/*, video/*">
-            <span class="admin-file-btn">Выберите файлы</span>
-          </label>
-        </div>`;
-
-        forms.querySelector('.admin-item-7 .admin-old-files-list').innerHTML = output7;
-        forms.querySelector('.admin-item-8 .admin-old-files-list').innerHTML = output8;
-        forms.querySelector('.admin-item-12 .admin-old-files-list').innerHTML = output12;
-        forms.querySelector('.admin-item-13 .admin-old-files-list').innerHTML = output13;
-        forms.querySelector('.admin-item-17 .admin-old-files-list').innerHTML = output17;
-
-        forms.querySelector('.admin-item-7 .admin-new-files').innerHTML = outputinput7;
-        forms.querySelector('.admin-item-8 .admin-new-files').innerHTML = outputinput8;
-        forms.querySelector('.admin-item-12 .admin-new-files').innerHTML = outputinput12;
-        forms.querySelector('.admin-item-13 .admin-new-files').innerHTML = outputinput13;
-        forms.querySelector('.admin-item-17 .admin-new-files').innerHTML = outputinput17;
       } else {
         console.error('Отсутствуют или некорректные данные о временных интервалах.', response.times);
       }

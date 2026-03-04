@@ -16,24 +16,26 @@
         </div>
       </div>
     </div>
-    <!--<video id="homevideo" autoplay src="" muted poster=""></video>-->
-    <div class="info" id="info">
+    <div class="info" id="info" style="display: flex">
       <div class="info-column">
         <p class="info-item">
-          <img src="/deploy/img/погода.svg" width="20" height="20" alt="погода">
-          <span class="info-item-span" id="temp">t +23°C</span>
+          Погода Тольятти
         </p>
         <p class="info-item">
-          <img src="/deploy/img/давление.svg" width="20" height="20" alt="давление">
-          <span class="info-item-span" id="pressure">730 мм</span>
+          <img src="/img/погода.svg" width="20" height="20" alt="погода">
+          <span class="info-item-span" id="temp"></span>
         </p>
         <p class="info-item">
-          <img src="/deploy/img/влага.svg" width="20" height="20" alt="Влага">
-          <span class="info-item-span" id="humid">38%</span>
+          <img src="/img/давление.svg" width="20" height="20" alt="давление">
+          <span class="info-item-span" id="pressure"></span>
         </p>
         <p class="info-item">
-          <img src="/deploy/img/ветер.svg" width="20" height="20" alt="Ветер">
-          <span class="info-item-span" id="wind">2 м/c</span>
+          <img src="/img/влага.svg" width="20" height="20" alt="Влага">
+          <span class="info-item-span" id="humid"></span>
+        </p>
+        <p class="info-item">
+          <img src="img/ветер.svg" width="20" height="20" alt="Ветер">
+          <span class="info-item-span" id="wind"></span>
         </p>
       </div>
       <div class="info-column">
@@ -44,39 +46,25 @@
     </div>
   </div>
   <button id="player-fullscreen" type="button">На весь экран</button>
-  <h2 class="player-header">Видео сегодня:</h2>
-  <div class="player-block">
-    <p class="player-text" data-from="0" data-to="0">Весь день:</p>
-    <ul class="player-list">
-      <li class="player-item" data-type="video">
-        <span class="player-item-image">
-          <video src="" width="200" height="200" poster="/img/blog.jpg"></video>
-        </span>
-        <span class="player-file-name">video-1.mp4</span>
-      </li>
-      <li class="player-item" data-type="video">
-        <span class="player-item-image">
-          <video src="" width="200" height="200" poster="/img/blog.jpg"></video>
-        </span>
-        <span class="player-file-name">video-1.mp4</span>
-      </li>
-    </ul>
+  <h2 class="player-header">Сегодня:</h2>
+  <div class="player-blocks">
+    <div class="player-block">
+      <p class="player-text" data-from="7" data-to="8"></p>
+      <ul class="player-list">
+        <li class="player-item" data-type="image">
+          <span class="player-item-image">
+            <video poster="/img/blog.jpg" width="100" height="100"></video>
+            <video src="/img/blog.jpg" width="100" height="100"></video>
+          <span class="player-file-name"></span>
+        </li>
+        <li class="player-item" data-type="video">
+          <span class="player-item-image">
+            <video poster="/img/video-1.mp4" width="100" height="100"></video>
+            <video src="/img/video-2.mp4" width="100" height="100"></video>
+          <span class="player-file-name"></span>
+        </li>
+      </ul>
   </div>
-  <div class="player-block">
-    <p class="player-text" data-from="15" data-to="17">C 14:00 до 16:00</p>
-    <ul class="player-list">
-      <li class="player-item" data-type="image">
-        <span class="player-item-image">
-          <video poster="/img/blog.jpg" width="200" height="200"></video>
-        </span>
-        <span class="player-file-name">blog.jpg</span>
-      </li>
-    </ul>
-  </div>
-  <!--<div class="video-no-item">
-    <h2>На сегодня нет видео</h2>
-  </div>
-  <button class="green-button" data-open-modal="edit-list">Добавить видео</button>-->
   <script src="js/main.min.js"></script>
 </body>
 

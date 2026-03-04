@@ -10,86 +10,73 @@
 <body class="container">
   <div class="login-container">
     <h2 class="login-header">Войти в панель администратора</h2>
-    <form class="login-form" action="" method="post">
+    <form class="login-form" action="login.php" method="post">
       <div class="login-group">
-        <label for="email" class="visually-hidden">Email</label>
-        <input type="email" id="email" name="email" required placeholder="Ваш email">
+        <label for="login" class="visually-hidden">Email</label>
+        <input type="text" id="login" name="login" required placeholder="Логин">
       </div>
       <div class="login-group">
         <label for="password" class="visually-hidden">Пароль</label>
         <input type="password" id="password" name="password" required placeholder="Ваш пароль">
       </div>
-      <button type="submit" class="btn login-submit-btn">Войти</button>
+      <div class="login-buttons">
+        <button type="submit" class="btn login-submit-btn">Войти</button>
+        <a class="login-link" href="register.php">Зарегистрироваться</a>
+      </div>
     </form>
   </div>
   <div class="admin-content container">
     <form id="admin-form" method="post" action="/deploy/img" enctype="json" method="post" enctype="multipart/form-data">
-      <div class="calendar">
-        <div id="calendar"></div>
-        <button id="gotoToday" type="button">Перейти к сегодня</button>
+      <div class="calendars">
+        <div class="calendar calendar-before">
+          <p>От даты</p>
+          <div id="calendar-from"></div>
+          <button id="gotoTodayFrom" type="button">Перейти к сегодня</button>
+        </div>
+        <div class="calendar calendar-to">
+          <p>До даты</p>
+          <div id="calendar-to"></div>
+          <button id="gotoTodayTo" type="button">Перейти к сегодня</button>
+        </div>
+        <button id="calendar-button" type="button">Добавить период</button>
       </div>
-      <table class="admin-table">
-        <input id="selectedDate" name="date" type="hidden">
+      <table class="admin-table" data-gallery="list">
+        <input id="selectedDateFrom" name="date-from" type="hidden">
+        <input id="selectedDateTo" name="date-to" type="hidden">
         <thead>
           <tr>
             <th>Время с:</th>
             <th>Время до:</th>
-            <th>Старые файлы</th>
-            <th>Новые файлы</th>
+            <th>Материалы для показа</th>
+            <th>Загрузка файлов</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="admin-item">
+          <tr class="admin-item admin-item-7">
             <td class="admin-time">
               <label class="visually-hidden" for="time-from-0">Время показа с:</label>
-              <select name="time-from[]" class="visually-hidden" id="time-from-0">
-                <option value="00:00">00:00</option>
-                <option value="07:00">07:00</option>
-                <option value="08:00">08:00</option>
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="12:00">12:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
-                <option value="18:00">18:00</option>
-                <option value="19:00">19:00</option>
-                <option value="20:00">20:00</option>
+              <select class="visually-hidden admin-time-from" id="time-from-0" name="time-from[]">
+                <option value="7" selected>07:00</option>
               </select>
-              00:00
+              07:00
             </td>
             <td class="admin-time">
-              <label for="time-to-0" class="visually-hidden">Время показа до:</label>
-              <select name="time-to[]" id="time-to-0" class="visually-hidden">
-                <option value="07:00">07:00</option>
-                <option value="08:00">08:00</option>
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="12:00">12:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
-                <option value="18:00">18:00</option>
-                <option value="19:00">19:00</option>
-                <option value="20:00">20:00</option>
+              <label class="visually-hidden" for="time-to-0">Время показа до:</label>
+              <select class="visually-hidden" id="time-to-0" name="time-to[]">
+                <option value="8" selected>08:00</option>
               </select>
-              00.00
+              08:00
             </td>
             <td class="admin-old-files">
               <ul class="admin-old-files-list admin-old-files-0">
                 <li class="admin-files-item">
                   <span class="admin-item-image">
-                    <video src="/img/video-2.mp4" width="100" height="100"></video>
+                    <a data-fancybox="group" data-caption="4 марта 07.00-08.00" data-audio="false" href="/img/video-1.mp4" data-thumb="/img/blog.jpg" title="Показать подробнее"></a>
+                    <video src="/img/video-1.mp4" width="100" height="100" muted></video>
                   </span>
-                  <p>video-2.mp4
+                  <p>video-1.mp4
                     <input id="file-delete-0" class="admin-delete-file" type="checkbox" name="delete_files[]" value="0">
-                    <label for="file-delete-0"><?= $item['files'] ?></label>
+                    <label for="file-delete-0"></video></label>
                   </p>
                 </li>
               </ul>
@@ -98,67 +85,37 @@
               <ul class="admin-new-file-list admin-new-file-list-0"></ul>
               <div class="admin-input-files">
                 <label class="input-file" for="file-new-0">
-                  <input type="file" name="file[]" id="file-new-0" multiple accept="image/*, video/*">
+                  <input name="files-0[]" id="file-new-0" type="file" multiple accept="image/*, video/*">
                   <span class="admin-file-btn">Выберите файлы</span>
                 </label>
               </div>
             </td>
-            <td class="admin-action">
-              <input id="time-0" type="checkbox" class="admin-delete-time" name="delete_times[]" value="0">
-              <label for="time-0"></label>
-            </td>
           </tr>
-          <tr class="admin-item">
+          <tr class="admin-item admin-item-8">
             <td class="admin-time">
               <label class="visually-hidden" for="time-from-1">Время показа с:</label>
-              <select name="time-from[]" class="visually-hidden" id="time-from-1">
-                <option value="07:00">07:00</option>
-                <option value="08:00">08:00</option>
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="12:00">12:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
-                <option value="18:00">18:00</option>
-                <option value="19:00">19:00</option>
-                <option value="20:00">20:00</option>
+              <select class="visually-hidden admin-time-from" id="time-from-1" name="time-from[]">
+                <option value="8" selected>08:00</option>
               </select>
               08:00
             </td>
             <td class="admin-time">
-              <label for="time-to-1" class="visually-hidden">Время показа до:</label>
-              <select name="time-to[]" id="time-to-1" class="visually-hidden">
-                <option value="00:00">00:00</option>
-                <option value="07:00">07:00</option>
-                <option value="08:00">08:00</option>
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="12:00">12:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
-                <option value="18:00">18:00</option>
-                <option value="19:00">19:00</option>
-                <option value="20:00">20:00</option>
+              <label class="visually-hidden" for="time-to-1">Время показа до:</label>
+              <select class="visually-hidden" id="time-to-1" name="time-to[]">
+                <option value="12" selected>12:00</option>
               </select>
-              09.00
+              12.00
             </td>
             <td class="admin-old-files">
               <ul class="admin-old-files-list admin-old-files-1">
                 <li class="admin-files-item">
                   <span class="admin-item-image">
-                    <video src="/img/video-2.mp4" width="100" height="100"></video>
+                    <a data-fancybox="group" data-caption="4 марта 08.00-12.00" data-audio="false" href="/img/video-2.mp4" data-thumb="/img/blog.jpg" title="Показать подробнее"></a>
+                    <video src="/img/video-2.mp4" width="100" height="100" muted data-thumbs="/img/video-2.mp4"></video>
                   </span>
                   <p>video-2.mp4
                     <input id="file-delete-1" class="admin-delete-file" type="checkbox" name="delete_files[]" value="1">
-                    <label for="file-delete-1"><?= $item['files'] ?></label>
+                    <label for="file-delete-1"></video></label>
                   </p>
                 </li>
               </ul>
@@ -167,63 +124,124 @@
               <ul class="admin-new-file-list admin-new-file-list-1"></ul>
               <div class="admin-input-files">
                 <label class="input-file" for="file-new-1">
-                  <input type="file" name="file[]" id="file-new-1" multiple accept="image/*, video/*">
+                  <input id="file-new-1" name="files-1[]" type="file" multiple accept="image/*, video/*">
                   <span class="admin-file-btn">Выберите файлы</span>
                 </label>
               </div>
             </td>
-            <td class="admin-action">
-              <input id="time-1" type="checkbox" class="admin-delete-time" name="delete_times[]" value="1">
-              <label for="time-1"></label>
-            </td>
           </tr>
-          <tr class="admin-item">
+          <tr class="admin-item admin-item-12">
             <td class="admin-time">
-              <label for="time-from-2" class="visually-hidden">Время показа с:</label>
-              <select name="time-from[]" id="time-from-2">
-                <option value="07:00">07:00</option>
-                <option value="08:00">08:00</option>
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="12:00">12:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
-                <option value="18:00">18:00</option>
-                <option value="19:00">19:00</option>
-                <option value="20:00">20:00</option>
+              <label class="visually-hidden" for="time-from-2">Время показа с:</label>
+              <select class="visually-hidden admin-time-from" id="time-from-2" name="time-from[]">
+                <option value="12" selected>12:00</option>
               </select>
+              12:00
             </td>
             <td class="admin-time">
-              <label for="time-to-2" class="visually-hidden">Время показа до:</label>
-              <select name="time-to[]" id="time-to-2">
-                <option value="07:00">07:00</option>
-                <option value="08:00">08:00</option>
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="12:00">12:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
-                <option value="18:00">18:00</option>
-                <option value="19:00">19:00</option>
-                <option value="20:00">20:00</option>
+              <label class="visually-hidden" for="time-to-2">Время показа до:</label>
+              <select class="visually-hidden" id="time-to-2" name="time-to[]">
+                <option value="13" selected>13:00</option>
               </select>
+              13:00
             </td>
             <td class="admin-old-files">
-              <ul class="admin-old-files admin-old-files-2"></ul>
+              <ul class="admin-old-files-list admin-old-files-2">
+                <li class="admin-files-item">
+                  <span class="admin-item-image">
+                    <a data-fancybox="group" data-caption="4 марта 12.00-13.00" data-audio="false" href="/img/video-1.mp4" data-thumb="/img/blog.jpg" title="Показать подробнее"></a>
+                    <video src="/img/video-1.mp4" width="100" height="100" muted></video>
+                  </span>
+                  <p>video-1.mp4
+                    <input id="file-delete-2" class="admin-delete-file" type="checkbox" name="delete_files[]" value="0">
+                    <label for="file-delete-2"></video></label>
+                  </p>
+                </li>
+              </ul>
             </td>
             <td class="admin-new-files">
               <ul class="admin-new-file-list admin-new-file-list-2"></ul>
               <div class="admin-input-files">
                 <label class="input-file" for="file-new-2">
-                  <input type="file" name="file[]" id="file-new-2" multiple accept="image/*, video/*">
+                  <input id="file-new-2" name="files-2[]" type="file" multiple accept="image/*, video/*">
+                  <span class="admin-file-btn">Выберите файлы</span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr class="admin-item admin-item-13">
+            <td class="admin-time">
+              <label class="visually-hidden" for="time-from-3">Время показа с:</label>
+              <select class="visually-hidden admin-time-from" id="time-from-3" name="time-from[]">
+                <option value="13" selected>13:00</option>
+              </select>
+              13:00
+            </td>
+            <td class="admin-time">
+              <label class="visually-hidden" for="time-to-3">Время показа до:</label>
+              <select class="visually-hidden" id="time-to-3" name="time-to[]">
+                <option value="17" selected>17:00</option>
+              </select>
+              17:00
+            </td>
+            <td class="admin-old-files">
+              <ul class="admin-old-files-list admin-old-files-3">
+                <li class="admin-files-item">
+                  <span class="admin-item-image">
+                    <a data-fancybox="group" data-caption="4 марта 13.00-17.00" data-audio="false" href="/img/blog.jpg" data-thumb="/img/blog.jpg" title="Показать подробнее"></a>
+                    <video src="" width="100" height="100" poster="/img/blog.jpg" muted></video>
+                  </span>
+                  <p>blog.jpg
+                    <input id="file-delete-3" class="admin-delete-file" type="checkbox" name="delete_files[]" value="0">
+                    <label for="file-delete-3"></video></label>
+                  </p>
+                </li>
+              </ul>
+            </td>
+            <td class="admin-new-files">
+              <ul class="admin-new-file-list admin-new-file-list-3"></ul>
+              <div class="admin-input-files">
+                <label class="input-file" for="file-new-3">
+                  <input id="file-new-3" name="files-3[]" type="file" multiple accept="image/*, video/*">
+                  <span class="admin-file-btn">Выберите файлы</span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr class="admin-item admin-item-17">
+            <td class="admin-time">
+              <label class="visually-hidden" for="time-from-4">Время показа с:</label>
+              <select class="visually-hidden admin-time-from" id="time-from-4" name="time-from[]">
+                <option value="17" selected>17:00</option>
+              </select>
+              17:00
+            </td>
+            <td class="admin-time">
+              <label class="visually-hidden" for="time-to-4">Время показа до:</label>
+              <select class="visually-hidden" id="time-to-4" name="time-to[]">
+                <option value="18" selected>18:00</option>
+              </select>
+              18:00
+            </td>
+            <td class="admin-old-files">
+              <ul class="admin-old-files-list admin-old-files-4">
+                <li class="admin-files-item">
+                  <span class="admin-item-image">
+                    <a data-fancybox="group" data-caption="4 марта 17.00-18.00" data-audio="false" href="/img/01.jpg" data-thumb="/img/01.jpg" title="Показать подробнее"></a>
+                    <video src="" width="100" height="100" poster="/img/01.jpg" muted></video>
+                  </span>
+                  <p>01.jpg
+                    <input id="file-delete-4" class="admin-delete-file" type="checkbox" name="delete_files[]" value="0">
+                    <label for="file-delete-4"></video></label>
+                  </p>
+                </li>
+              </ul>
+            </td>
+            <td class="admin-new-files">
+              <ul class="admin-new-file-list admin-new-file-list-4"></ul>
+              <div class="admin-input-files">
+                <label class="input-file" for="file-new-4">
+                  <input id="file-new-4" name="files-4[]" type="file" multiple accept="image/*, video/*">
                   <span class="admin-file-btn">Выберите файлы</span>
                 </label>
               </div>
@@ -231,7 +249,6 @@
           </tr>
         </tbody>
       </table>
-      <button class="admin-time-button" type="button">Добавить новое время</button>
       <button class="admin-submit-button" type="submit">Сохранить</button>
     </form>
   </div>

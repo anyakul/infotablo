@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@daypilot/daypilot-lite-javascript": "^4.6.1",
+    "@fancyapps/ui": "^5.0.36",
     "axios": "^1.13.5",
     "browsersync-ssi": "^0.2.4",
     "cheerio": "^1.2.0",
@@ -53,6 +54,7 @@
     "express": "^5.1.0",
     "googleapis": "^161.0.0",
     "gulp-svgmin": "^4.1.0",
+    "lightgallery": "^2.9.0",
     "mongodb": "^2.0.0",
     "mongoskin": "^2.1.0",
     "multer": "^2.0.2",

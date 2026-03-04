@@ -24,15 +24,15 @@
         </div>
         <button id="calendar-button" type="button">Добавить период</button>
       </div>
-      <table class="admin-table">
+      <table class="admin-table" data-gallery="list">
         <input id="selectedDateFrom" name="date-from" type="hidden">
         <input id="selectedDateTo" name="date-to" type="hidden">
         <thead>
           <tr>
             <th>Время с:</th>
             <th>Время до:</th>
-            <th>Старые файлы</th>
-            <th>Новые файлы</th>
+            <th>Материалы для показа</th>
+            <th>Загрузка файлов</th>
           </tr>
         </thead>
         <tbody>
