@@ -232,7 +232,6 @@ export const form = () => {
       const parsedDate = new Date(curDate);
 
       const formattedDate = parsedDate.toLocaleDateString('ru-RU', {
-          year: 'numeric',
           month: 'long',
           day: 'numeric'
       });
