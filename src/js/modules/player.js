@@ -240,6 +240,39 @@ export const player = () => {
     }
 
     function processResponse(response) {
+      document.querySelector('.player-blocks').innerHTML = '';
+      let output = '';
+      let times = response.times;
+      let files = response.files;
+      let index = 0;
+
+      times.forEach(time => {
+        const fromText = time.time_from === 0 ? 'Весь день' : `С ${time.time_from} до ${time.time_to}`;
+        
+        // Извлекаем видео для текущего временного интервала
+        const relatedVideos = files.filter(item => item.time_id === time.id);
+
+        output += `
+            <div class="player-block">
+                <p class="player-text" data-from="${time.time_from}" data-to="${time.time_to}">${fromText}</p>
+                <ul class="player-list">
+                    ${relatedVideos.map(videoItem => `
+                        <li class="player-item" data-type="${videoItem.types}">
+                            <span class="player-item-image">
+                                ${videoItem.types === 'image' ? 
+                                    `<video poster="/uploads/${videoItem.files}" width="100" height="100"></video>` :
+                                    `<video src="/uploads/${videoItem.files}" width="100" height="100"></video>`
+                                }
+                            </span>
+                            <span class="player-file-name">${videoItem.files}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        `;
+      });
+
+      document.querySelector('.player-blocks').innerHTML = output;
     }
   }
 }

@@ -97,8 +97,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           move_uploaded_file($file_tmp_name, "uploads/$file_name");
 
+          // Если это видео, извлекаем первый кадр
+          if ($file_type === 'video') {
+            $thumbnail_name = pathinfo($file_name, PATHINFO_FILENAME) . '.jpg';
+            $thumbnail_temp_path = sys_get_temp_dir() . '/' . $thumbnail_name;
+            $thumbnail_path = "$thumbnail_name";
+            system("C:/ffmpeg/bin/ffmpeg.exe -i uploads\\$file_name -ss 00:00:01 -vframes 1 -q:v 2 uploads\\$thumbnail_name 2>&1");
+          } else {
+            $thumbnail_path = "$file_name";
+          }
+
           if ($file_name != '') {
-            $sql_files = "INSERT INTO files (time_id, files, types) VALUES ('$time_id', '$file_name', '$file_type')";
+            $sql_files = "INSERT INTO files (time_id, files, types, thumbs) VALUES ('$time_id', '$file_name', '$file_type', '$thumbnail_path')";
             $stmt_files = db_get_prepare_stmt($con, $sql_files);
             $res_file  = mysqli_stmt_execute($stmt_files);
           }
@@ -140,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   // Выполняем запросы к базе данных
-  $sql_video = "SELECT d.dates, t.time_from, t.time_to, f.types, f.id, f.files, f.time_id FROM dates d INNER JOIN times t ON t.date_id = d.id LEFT JOIN files f ON f.time_id = t.id WHERE d.dates = '$dates'";
+  $sql_video = "SELECT d.dates, t.time_from, t.time_to, f.types, f.id, f.files, f.time_id, f.thumbs FROM dates d INNER JOIN times t ON t.date_id = d.id LEFT JOIN files f ON f.time_id = t.id WHERE d.dates = '$formatedDate'";
 
   $res_video = mysqli_query($con, $sql_video);
   $video = mysqli_fetch_all($res_video, MYSQLI_ASSOC);
@@ -170,4 +180,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
   echo "Запрос не является POST.";
 }
-?>

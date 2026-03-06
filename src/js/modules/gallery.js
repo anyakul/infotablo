@@ -17,5 +17,8 @@ export function gallery() {
     animationDuration: 600,
     transitionEffect: "rotate",
     transitionDuration: 400,
+    thumbs: {
+      autoStart: true
+    }
   });
 }

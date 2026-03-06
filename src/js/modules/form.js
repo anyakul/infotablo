@@ -201,30 +201,6 @@ export const form = () => {
       }
     }
 
-    function extractFirstFrame(videoSrc, successCallback) {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const video = document.createElement('video');
-
-      video.src = videoSrc;
-      video.crossOrigin = 'anonymous'; // Для кросс-доменных ресурсов
-
-      video.oncanplaythrough = function() {
-        video.currentTime = 2;
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const thumbnailBase64 = canvas.toDataURL('image/jpeg');
-        successCallback(thumbnailBase64);
-      };
-
-      video.onerror = function(e) {
-        console.error('Ошибка загрузки видео:', e);
-      };
-
-      video.load();
-    }
-
     function processResponse(response) {
       let times = response.times;
       let files = response.files;
@@ -236,10 +212,12 @@ export const form = () => {
           day: 'numeric'
       });
 
-      function getOutput(file, type, index, indexFile, time) {
+      function getOutput(file, type, index, indexFile, time, thumbs) {
         return `<li class="admin-files-item" data-files="${type}">
   <span class="admin-item-image">
-  <a data-fancybox="group" data-caption="${formattedDate} ${time}" data-audio="false" href="/uploads/${file}" data-thumb="" title="Показать подробнее"></a>
+  <a data-fancybox="group" data-caption="${formattedDate} ${time}" data-audio="false" href="/uploads/${file}" data-thumb="uploads/${thumbs}" title="Показать подробнее">
+  <video src="/uploads/${file}" width="200" height="200"></video>
+  </a>
   ${type === 'image' ?
   `<video poster="/uploads/${file}" width="200" height="200"></video>` :
   `<video src="/uploads/${file}" width="200" height="200"></video>`
@@ -260,20 +238,6 @@ export const form = () => {
             <span class="admin-file-btn">Выберите файлы</span>
           </label>
         </div>`
-      }
-
-      function itemsForeach(items) {
-        items.forEach((item) => {
-          let link = item.querySelector('a');
-          let videoSrc = link.getAttribute('href');
-          if (items[0] && items[0].getAttribute('data-files') == 'video') {
-            extractFirstFrame(videoSrc, base64Thumbnail => {
-              link.dataset.thumb = base64Thumbnail;
-            });
-          } else {
-            link.dataset.thumb = videoSrc;
-          }
-        })
       }
 
       if (times && Array.isArray(times)) {
@@ -309,65 +273,55 @@ export const form = () => {
             let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output += getOutput(file.files, file.types, '0', index_file, '07.00-08.00');
+                output += getOutput(file.files, file.types, '0', index_file, '07.00-08.00', file.thumbs);
                 index_file++;
               }
             })
             oldFiles7.innerHTML = output;
-            let items = oldFiles7.querySelectorAll('.admin-files-item');
-            itemsForeach(items);
           }
 
           if (time.time_from == 8) {
             let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output += getOutput(file.files, file.types, '1', index_file, '08.00-12.00');
+                output += getOutput(file.files, file.types, '1', index_file, '08.00-12.00', file.thumbs);
                 index_file++;
               }
             })
             oldFiles8.innerHTML = output;
-            let items = oldFiles8.querySelectorAll('.admin-files-item');
-            itemsForeach(items);
           }
 
           if (time.time_from == 12) {
             let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output += getOutput(file.files, file.types, '2', index_file, '12.00-13.00');
+                output += getOutput(file.files, file.types, '2', index_file, '12.00-13.00', file.thumbs);
                 index_file++;
               }
             })
             oldFiles12.innerHTML = output;
-            let items = oldFiles12.querySelectorAll('.admin-files-item');
-            itemsForeach(items);
           }
 
           if (time.time_from == 13) {
             let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output += getOutput(file.files, file.types, '3', index_file, '13.00-17.00');
+                output += getOutput(file.files, file.types, '3', index_file, '13.00-17.00', file.thumbs);
                 index_file++;
               }
             })
             oldFiles13.innerHTML = output;
-            let items = oldFiles13.querySelectorAll('.admin-files-item');
-            itemsForeach(items);
           }
 
           if (time.time_from == 17) {
             let output = '';
             files.forEach((file) => {
               if (file.time_id === time.id) {
-                output += getOutput(file.files, file.types, '4', index_file, '17.00-18.00');
+                output += getOutput(file.files, file.types, '4', index_file, '17.00-18.00', file.thumbs);
                 index_file++;
               }
             })
             oldFiles17.innerHTML = output;
-            let items = oldFiles17.querySelectorAll('.admin-files-item');
-            itemsForeach(items);
           }
         });
       } else {

@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- Хост:                         127.0.0.1
+-- Хост:                         192.168.56.1
 -- Версия сервера:               5.6.51 - MySQL Community Server (GPL)
 -- Операционная система:         Win64
 -- HeidiSQL Версия:              12.1.0.6537
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `dates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dates` date DEFAULT NULL,
   KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Экспортируемые данные не выделены.
 
@@ -34,10 +34,11 @@ CREATE TABLE IF NOT EXISTS `files` (
   `files` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_id` int(11) NOT NULL,
   `types` char(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `thumbs` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   KEY `id` (`id`),
   KEY `times` (`time_id`),
   CONSTRAINT `times` FOREIGN KEY (`time_id`) REFERENCES `times` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Экспортируемые данные не выделены.
 
@@ -50,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `times` (
   KEY `id` (`id`),
   KEY `date` (`date_id`),
   CONSTRAINT `date` FOREIGN KEY (`date_id`) REFERENCES `dates` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Экспортируемые данные не выделены.
 
