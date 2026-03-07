@@ -25,8 +25,8 @@
         <button id="calendar-button" type="button">Добавить период</button>
       </div>
       <table class="admin-table">
-        <input id="selectedDateFrom" name="date-from" type="hidden">
-        <input id="selectedDateTo" name="date-to" type="hidden">
+        <input id="selectedDateFrom" name="date-from">
+        <input id="selectedDateTo" name="date-to">
         <thead>
           <tr>
             <th>Время с:</th>

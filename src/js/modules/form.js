@@ -36,10 +36,8 @@ export const form = () => {
           const today = new Date();
           const currentDay = today.getDay();
           if (currentDay === 0 || currentDay === 6) {
-            const monday = new Date(today);
             today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
-            monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
-            fetchFunc(monday.toISOString().split('T')[0]);
+            fetchFunc(today.toISOString().split('T')[0]);
           } else {
             fetchFunc();
           }
@@ -62,10 +60,8 @@ export const form = () => {
           const today = new Date();
           const currentDay = today.getDay();
           if (currentDay === 0 || currentDay === 6) {
-            const monday = new Date(today);
             today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
-            monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
-            document.getElementById('selectedDateTo').value = monday.toISOString().split('T')[0];
+            document.getElementById('selectedDateTo').value = today.toISOString().split('T')[0];
           } else {
             document.getElementById('selectedDateTo').value = dateStr;
           }
@@ -79,11 +75,9 @@ export const form = () => {
           const today = new Date();
           const currentDay = today.getDay();
           if (currentDay === 0 || currentDay === 6) {
-            const monday = new Date(today);
             today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
-            monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
-            document.getElementById('selectedDateTo').value = monday.toISOString().split('T')[0];
-            fetchFunc(monday.toISOString().split('T')[0]);
+            document.getElementById('selectedDateTo').value = today.toISOString().split('T')[0];
+            fetchFunc(today.toISOString().split('T')[0]);
           } else {
             document.getElementById('selectedDateTo').value = getFormattedDate();
             fetchFunc();
@@ -126,10 +120,8 @@ export const form = () => {
         const today = new Date();
         const currentDay = today.getDay();
         if (currentDay === 0 || currentDay === 6) {
-          const monday = new Date(today);
           today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
-          monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
-          fetchFunc(monday.toISOString().split('T')[0]);
+          fetchFunc(today.toISOString().split('T')[0]);
         } else {
           fetchFunc();
         }
@@ -145,10 +137,8 @@ export const form = () => {
         const today = new Date();
         const currentDay = today.getDay();
         if (currentDay === 0 || currentDay === 6) {
-          const monday = new Date(today);
           today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
-          monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
-          fetchFunc(monday.toISOString().split('T')[0]);
+          fetchFunc(today.toISOString().split('T')[0]);
         } else {
           document.getElementById('selectedDateTo').value = getFormattedDate();
           fetchFunc();
