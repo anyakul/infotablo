@@ -81,6 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($files['tmp_name'] as $file_key => $file_tmp_name) {
           $file_name = $files['name'][$file_key];
           $extension = strtolower(pathinfo($files['name'][$file_key], PATHINFO_EXTENSION));
+          $file_full_path = "uploads/" . $file_name;
+          $thumbnail_name = pathinfo($file_name, PATHINFO_FILENAME) . '.jpg';
+          $thumbnail_path = "uploads/" . $thumbnail_name;
 
           switch ($extension) {
             case 'jpg':
@@ -95,20 +98,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               break;
           }
 
-          move_uploaded_file($file_tmp_name, "uploads/$file_name");
-
-          // Если это видео, извлекаем первый кадр
-          if ($file_type === 'video') {
-            $thumbnail_name = pathinfo($file_name, PATHINFO_FILENAME) . '.jpg';
-            $thumbnail_temp_path = sys_get_temp_dir() . '/' . $thumbnail_name;
-            $thumbnail_path = "$thumbnail_name";
-            system("C:/ffmpeg/bin/ffmpeg.exe -i uploads\\$file_name -ss 00:00:01 -vframes 1 -q:v 2 uploads\\$thumbnail_name 2>&1");
-          } else {
-            $thumbnail_path = "$file_name";
-          }
-
           if ($file_name != '') {
-            $sql_files = "INSERT INTO files (time_id, files, types, thumbs) VALUES ('$time_id', '$file_name', '$file_type', '$thumbnail_path')";
+            if (!file_exists($file_full_path)) {
+              move_uploaded_file($file_tmp_name, "uploads/$file_name");
+
+              if ($file_type === 'video') {
+                system("C:/ffmpeg/bin/ffmpeg.exe -i uploads\\$file_name -ss 00:00:01 -vframes 1 -q:v 2 uploads\\$thumbnail_name 2>&1");
+              } else {
+                $thumbnail_path = "$file_name";
+              }
+            }
+            $sql_files = "INSERT INTO files (time_id, files, types, thumbs) VALUES ('$time_id', '$file_name', '$file_type', '$thumbnail_name')";
             $stmt_files = db_get_prepare_stmt($con, $sql_files);
             $res_file  = mysqli_stmt_execute($stmt_files);
           }
@@ -139,9 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $count = mysqli_num_rows($file_id_query);
 
           if ($count === 0) {
+            $thumbnail_name = pathinfo($fileName, PATHINFO_FILENAME) . '.jpg';
             $uploadDir = "uploads/";
             $fullPath = $uploadDir . $fileName;
+            $thumbsPath = $uploadDir . $thumbnail_name;
             unlink($fullPath);
+            unlink($thumbsPath);
           }
         }
       }

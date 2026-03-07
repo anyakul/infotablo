@@ -237,11 +237,8 @@ export const form = () => {
       function getOutput(file, type, index, indexFile, time, thumbs) {
         return `<li class="admin-files-item" data-files="${type}">
   <span class="admin-item-image">
-  <a data-fancybox="group" data-caption="${formattedDate} ${time}" data-audio="false" href="/uploads/${file}" data-thumb="uploads/${thumbs}" title="Показать подробнее"></a>
-  ${type === 'image' ?
-  `<video poster="/uploads/${file}" width="200" height="200"></video>` :
-  `<video src="/uploads/${file}" width="200" height="200"></video>`
-  }
+  <a data-fancybox="group" data-caption="${formattedDate} ${time}" data-audio="false" href="/uploads/${file}" data-thumb="/uploads/${thumbs}" title="Показать подробнее"></a>
+  <img src="/uploads/${thumbs}" width="100" height="100">
   </span>
   <p>
   <input id="file-${index}-${indexFile}" class="admin-delete-file" type="checkbox" name="delete-files-${index}[]" value="${file}">
