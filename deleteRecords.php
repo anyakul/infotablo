@@ -8,7 +8,7 @@ include('helpers.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $files_sql = "
-    SELECT f.files FROM files f
+    SELECT f.files, f.thumbs FROM files f
     WHERE f.time_id IN (
       SELECT t.id
       FROM times t
@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   foreach ($files as $file) {
     $fileName = $file['files'];
+    $thumbsName = $file['thumbs'];
     $files_name_sql = "
       SELECT id FROM files f
       WHERE f.files = '$fileName' 
@@ -45,7 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($count === 0) {
       $uploadDir = "uploads/";
       $fullPath = $uploadDir . $fileName;
+      $thumbsPath = $uploadDir . $thumbsName;
       unlink($fullPath);
+      unlink($thumbsPath);
     }
   }
 

@@ -18,7 +18,6 @@ export const form = () => {
 
   if (forms) {
     const calendarButton = forms.querySelector('#calendar-button');
-    fetchFunc();
     updatePage();
 
     function updatePage() {
@@ -37,26 +36,16 @@ export const form = () => {
           const today = new Date();
           const currentDay = today.getDay();
           if (currentDay === 0 || currentDay === 6) {
+            const monday = new Date(today);
             today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
+            monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
+            fetchFunc(monday.toISOString().split('T')[0]);
+          } else {
+            fetchFunc();
           }
           instance.setDate(today);
         }
       });
-
-      calendarButton.addEventListener('click', function() {
-        if (forms.classList.contains('calendars-period')) {
-          forms.classList.remove('calendars-period');
-          fetchFunc();
-          document.getElementById('selectedDateTo').value = getFormattedDate();
-          calendarFrom.setDate(new Date());
-          calendarTo.setDate(new Date());
-          calendarButton.textContent = 'Добавить период';
-        } else {
-          forms.classList.add('calendars-period');
-          document.getElementById('selectedDateTo').value = document.getElementById('selectedDateFrom').value;
-          calendarButton.textContent = 'Скрыть второй календарь';
-        }
-      })
 
       const calendarTo = flatpickr("#calendar-to", {
         inline: true,
@@ -73,14 +62,45 @@ export const form = () => {
           const today = new Date();
           const currentDay = today.getDay();
           if (currentDay === 0 || currentDay === 6) {
+            const monday = new Date(today);
             today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
+            monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
+            document.getElementById('selectedDateTo').value = monday.toISOString().split('T')[0];
+          } else {
+            document.getElementById('selectedDateTo').value = dateStr;
           }
           instance.setDate(today);
         }
       });
 
+      calendarButton.addEventListener('click', function() {
+        if (forms.classList.contains('calendars-period')) {
+          forms.classList.remove('calendars-period');
+          const today = new Date();
+          const currentDay = today.getDay();
+          if (currentDay === 0 || currentDay === 6) {
+            const monday = new Date(today);
+            today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
+            monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
+            document.getElementById('selectedDateTo').value = monday.toISOString().split('T')[0];
+            fetchFunc(monday.toISOString().split('T')[0]);
+          } else {
+            document.getElementById('selectedDateTo').value = getFormattedDate();
+            fetchFunc();
+          }
+          calendarFrom.setDate(today);
+          calendarTo.setDate(today);
+          calendarButton.textContent = 'Добавить период';
+        } else {
+          forms.classList.add('calendars-period');
+          document.getElementById('selectedDateTo').value = document.getElementById('selectedDateFrom').value;
+          calendarButton.textContent = 'Скрыть второй календарь';
+        }
+      })
+
       calendarFrom.config.onChange.push(function(selectedDates, dateStr, instance) {
         fetchFunc(dateStr);
+
         if (instance.element.id === 'calendar-from') {
           if (forms.classList.contains('calendars-period')) {
             if (selectedDates[0] >= calendarTo.selectedDates[0]) {
@@ -98,32 +118,44 @@ export const form = () => {
         if (instance.element.id === 'calendar-to') {
           if (selectedDates[0] < calendarFrom.selectedDates[0]) {
             calendarFrom.setDate(selectedDates[0], true, true);
-          } 
-          if (dateStr === getFormattedDate()) {
-            calendarFrom.setDate(new Date());
           }
         }
       });
-      document.getElementById('selectedDateTo').value = getFormattedDate();
 
       document.querySelector('#gotoTodayFrom').addEventListener('click', function() {
-        calendarFrom.jumpToDate(new Date());
-        calendarFrom.setDate(new Date());
-        fetchFunc();
+        const today = new Date();
+        const currentDay = today.getDay();
+        if (currentDay === 0 || currentDay === 6) {
+          const monday = new Date(today);
+          today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
+          monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
+          fetchFunc(monday.toISOString().split('T')[0]);
+        } else {
+          fetchFunc();
+        }
+        calendarFrom.jumpToDate(today);
+        calendarFrom.setDate(today);
         if (!forms.classList.contains('calendars-period')) {
-          calendarTo.setDate(new Date());
+          calendarTo.setDate(today);
           document.getElementById('selectedDateTo').value = document.getElementById('selectedDateFrom').value;
         }
       });
 
       document.querySelector('#gotoTodayTo').addEventListener('click', function() {
-        const dates = new Date();
-        document.getElementById('selectedDateTo').value = getFormattedDate();
-        calendarTo.jumpToDate(dates);
-        calendarTo.setDate(dates);
-        calendarFrom.jumpToDate(dates);
-        calendarFrom.setDate(dates);
-        fetchFunc();
+        const today = new Date();
+        const currentDay = today.getDay();
+        if (currentDay === 0 || currentDay === 6) {
+          const monday = new Date(today);
+          today.setDate(today.getDate() + (currentDay === 0 ? 1 : 2));
+          monday.setDate(today.getDate() + (currentDay === 0 ? 0 : 1));
+          fetchFunc(monday.toISOString().split('T')[0]);
+        } else {
+          document.getElementById('selectedDateTo').value = getFormattedDate();
+          fetchFunc();
+        }
+        calendarFrom.setDate(today);
+        calendarTo.setDate(today);
+        document.getElementById('selectedDateTo').value = document.getElementById('selectedDateFrom').value;
       });
       forms.addEventListener('submit', fetchEditFunc);
     }
@@ -215,9 +247,7 @@ export const form = () => {
       function getOutput(file, type, index, indexFile, time, thumbs) {
         return `<li class="admin-files-item" data-files="${type}">
   <span class="admin-item-image">
-  <a data-fancybox="group" data-caption="${formattedDate} ${time}" data-audio="false" href="/uploads/${file}" data-thumb="uploads/${thumbs}" title="Показать подробнее">
-  <video src="/uploads/${file}" width="200" height="200"></video>
-  </a>
+  <a data-fancybox="group" data-caption="${formattedDate} ${time}" data-audio="false" href="/uploads/${file}" data-thumb="uploads/${thumbs}" title="Показать подробнее"></a>
   ${type === 'image' ?
   `<video poster="/uploads/${file}" width="200" height="200"></video>` :
   `<video src="/uploads/${file}" width="200" height="200"></video>`
